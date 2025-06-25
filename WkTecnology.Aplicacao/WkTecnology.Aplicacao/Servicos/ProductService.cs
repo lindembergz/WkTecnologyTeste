@@ -1,23 +1,21 @@
-﻿using Domain.Entities;
-using Domain.Repositories;
-using Application.DTOs;
-using Application.Common;
+﻿using Portifolio.Dominio.Entidades; // Para Category (se usado diretamente)
+using Portifolio.Dominio.ValueObjects; // Para Product, ProductName, Price (se existisse), FuelType (se existisse)
+using Portifolio.Dominio.Repositories;    // Para IProductRepository, ICategoryRepository
+using Portifolio.Aplicacao.DTOs;        // Para ProductDto, CreateProductDto, UpdateProductDto
+using Portifolio.Aplicacao.Common;      // Para PagedResult
+using Portifolio.Aplicacao.Query;         // Para ProductQuery
 using FluentValidation;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
-using Portifolio.Aplicacao.Common;
-using Portifolio.Aplicacao.DTOs;
-using Portifolio.Aplicacao.Query;
-using Microsoft.VisualBasic.FileIO;
-using Portifolio.Dominio.ValueObjects;
-using System.Diagnostics;
+// using Microsoft.VisualBasic.FileIO; // Parece não utilizado
+using System.Diagnostics; // Parece não utilizado diretamente, talvez por alguma dependência transitiva
 
 namespace Portifolio.Aplicacao.Servicos
 {
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly ICategoryRepository _categoryRepository; // Usado para categoryExists
         private readonly IDistributedCache _cache;
         private readonly IValidator<CreateProductDto> _createValidator;
         private readonly IValidator<UpdateProductDto> _updateValidator;
@@ -85,36 +83,27 @@ namespace Portifolio.Aplicacao.Servicos
             if (!categoryExists)
                 throw new ArgumentException($"Category with ID {createProductDto.CategoryId} does not exist");
 
+            // Ajustado para o construtor de Product.cs:
+            // public Product(ProductName name, string description, string brand, string model, int year, string color, int mileage, int categoryId)
+            // createProductDto.Name precisará ser encapsulado em ProductName se o validador/controller não o fizer.
+            // Por enquanto, assumindo que CreateProductDto terá ProductName ou que o construtor de Product aceita string para o nome.
+            // A entidade Product tem `public ProductName Name { get; private set; }` e construtor `Product(ProductName name, ...)`
+            // Então, precisamos de `new ProductName(createProductDto.Name)`
             var product = new Product(
-                createProductDto.Name,
+                new ProductName(createProductDto.Name), // Ajustado para ProductName
                 createProductDto.Description,
-                new Price(createProductDto.Price),
+                // Removido: new Price(createProductDto.Price),
                 createProductDto.Brand,
                 createProductDto.Model,
                 createProductDto.Year,
                 createProductDto.Color,
-                (FuelType)createProductDto.FuelType,
+                // Removido: (FuelType)createProductDto.FuelType,
                 createProductDto.Mileage,
                 createProductDto.CategoryId
             );
 
-            // Add images
-            if (createProductDto.ImageUrls?.Any() == true)
-            {
-                for (int i = 0; i < createProductDto.ImageUrls.Count; i++)
-                {
-                    product.AddImage(createProductDto.ImageUrls[i], i == 0);
-                }
-            }
-
-            // Add specifications
-            if (createProductDto.Specifications?.Any() == true)
-            {
-                foreach (var spec in createProductDto.Specifications)
-                {
-                    product.AddSpecification(spec.Name, spec.Value);
-                }
-            }
+            // Removido: Lógica de Add images
+            // Removido: Lógica de Add specifications
 
             await _productRepository.AddAsync(product, cancellationToken);
             await _productRepository.SaveChangesAsync(cancellationToken);
@@ -133,18 +122,20 @@ namespace Portifolio.Aplicacao.Servicos
             if (product == null)
                 throw new ArgumentException($"Product with ID {id} not found");
 
+            // Ajustado para UpdateBasicInfo(ProductName name, string description)
             product.UpdateBasicInfo(
-                updateProductDto.Name,
-                updateProductDto.Description,
-                new Price(updateProductDto.Price)
+                new ProductName(updateProductDto.Name), // Ajustado para ProductName
+                updateProductDto.Description
+                // Removido: new Price(updateProductDto.Price)
             );
 
+            // Ajustado para UpdateVehicleDetails(string brand, string model, int year, string color, int mileage)
             product.UpdateVehicleDetails(
                 updateProductDto.Brand,
                 updateProductDto.Model,
                 updateProductDto.Year,
                 updateProductDto.Color,
-                (FuelType)updateProductDto.FuelType,
+                // Removido: (FuelType)updateProductDto.FuelType,
                 updateProductDto.Mileage
             );
 
@@ -197,25 +188,26 @@ namespace Portifolio.Aplicacao.Servicos
 
         private static ProductDto MapToDto(Product product)
         {
+            // Ajustado para refletir os campos reais de Product.cs e o ProductDto simplificado
             return new ProductDto(
                 product.Id,
-                product.Name,
+                product.Name.Value, // ProductName é um ValueObject, pegamos o .Value
                 product.Description,
-                product.Price.Amount,
-                product.Price.Currency,
+                // Removido: product.Price.Amount,
+                // Removido: product.Price.Currency,
                 product.Brand,
                 product.Model,
                 product.Year,
                 product.Color,
-                product.FuelType.ToString(),
+                // Removido: product.FuelType.ToString(),
                 product.Mileage,
                 product.IsActive,
                 product.CategoryId,
-                product.Category?.Name ?? string.Empty,
+                product.Category?.Name.Value ?? string.Empty, // Category.Name é CategoryName
                 product.CreatedAt,
-                product.UpdatedAt,
-                product.Images.Select(i => new ProductImageDto(i.Id, i.ImageUrl, i.IsPrimary)).ToList(),
-                product.Specifications.Select(s => new ProductSpecificationDto(s.Name, s.Value)).ToList()
+                product.UpdatedAt
+                // Removido: product.Images...
+                // Removido: product.Specifications...
             );
         }
 
