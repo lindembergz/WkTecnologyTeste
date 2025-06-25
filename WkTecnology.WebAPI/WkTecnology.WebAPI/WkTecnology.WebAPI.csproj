@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.6" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="8.0.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\WkTecnology.Aplicacao\WkTecnology.Aplicacao\Portifolio.Aplicacao.csproj" />
+    <ProjectReference Include="..\..\WkTecnology.Domain\WkTecnology.Domain\Portifolio.Dominio.csproj" />
+    <ProjectReference Include="..\..\WkTecnology.Infra\WkTecnology.Infra\Portifolio.Infraestrutura.csproj" />
+  </ItemGroup>
+
+</Project>
