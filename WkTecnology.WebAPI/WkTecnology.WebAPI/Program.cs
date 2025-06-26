@@ -1,13 +1,15 @@
 using FluentValidation;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.RateLimiting;
-using Portifolio.Aplicacao.Servicos;
+using Portifolio.Aplicacao.Servicos;     // Para IProductService, ProductService, ICategoryService, CategoryService
+using Portifolio.Dominio.Repositories;  // Para IProductRepository, ICategoryRepository
+using Portifolio.Infraestrutura.Repositories; // Para ProductRepository, CategoryRepository
 using Portifolio.Aplicacao.Validators;
 using Portifolio.Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.OpenApi.Models;
-using FluentValidation;
+// O using FluentValidation repetido pode ser removido.
 
 
 // Existing code remains unchanged

@@ -1,26 +1,35 @@
-﻿using Portifolio.Dominio.Base;
+﻿using System.Collections.Generic;
+using Portifolio.Core;
 
 namespace Portifolio.Dominio.ValueObjects
 {
-    public abstract class CategoryName : ValueObject
+    public class CategoryName : ValueObject
     {
         public string Value { get; }
 
-        public CategoryName(string value)
+        private CategoryName(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("O nome da categoria não pode ser vazio.", nameof(value));
-            if (value.Length > 100)
-                throw new ArgumentException("O nome da categoria não pode ter mais que 100 caracteres.", nameof(value));
+            {
+                throw new ArgumentException("Category name cannot be null or empty.", nameof(value));
+            }
 
-            Value = value.Trim();
+            Value = value;
         }
 
-        public override string ToString() => Value;
+        public static CategoryName Create(string value)
+        {
+            return new CategoryName(value);
+        }
 
-        public override bool Equals(object? obj) =>
-            obj is CategoryName other && Value == other.Value;
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Value;
+        }
 
-        public override int GetHashCode() => Value.GetHashCode();
+        public override string ToString()
+        {
+            return Value;
+        }
     }
 }

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
-using Portifolio.Aplicacao.Common;
+using Portifolio.Core;
 using Portifolio.Aplicacao.DTOs;
-using Portifolio.Aplicacao.Query;
 using Portifolio.Aplicacao.Servicos;
 using System.ComponentModel.DataAnnotations;
+using Portifolio.Domain.Query;
 
 namespace WkTecnology.WebAPI.Controllers
 {

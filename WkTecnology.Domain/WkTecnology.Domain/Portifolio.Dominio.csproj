@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\WkTecnology.Core\WkTecnology.Core\WkTecnology.Core.csproj" />
+  </ItemGroup>
+
 </Project>

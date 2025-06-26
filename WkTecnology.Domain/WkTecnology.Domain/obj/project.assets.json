@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {}
+    "net8.0": {
+      "WkTecnology.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/WkTecnology.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WkTecnology.Core.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "WkTecnology.Core/1.0.0": {
+      "type": "project",
+      "path": "../../WkTecnology.Core/WkTecnology.Core/WkTecnology.Core.csproj",
+      "msbuildProject": "../../WkTecnology.Core/WkTecnology.Core/WkTecnology.Core.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0": []
+    "net8.0": [
+      "WkTecnology.Core >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\linde\\.nuget\\packages\\": {},
@@ -39,7 +58,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Lindemberg\\wkTecnology\\WkTecnologyTeste\\WkTecnology.Core\\WkTecnology.Core\\WkTecnology.Core.csproj": {
+              "projectPath": "C:\\Lindemberg\\wkTecnology\\WkTecnologyTeste\\WkTecnology.Core\\WkTecnology.Core\\WkTecnology.Core.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

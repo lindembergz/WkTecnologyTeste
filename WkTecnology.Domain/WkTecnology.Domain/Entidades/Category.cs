@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Portifolio.Dominio.Base;
+using Portifolio.Core;
 using Portifolio.Dominio.ValueObjects;
 
 namespace Portifolio.Dominio.Entidades

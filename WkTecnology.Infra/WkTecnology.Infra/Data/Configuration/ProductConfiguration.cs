@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore; // Ensure this namespace is included
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Portifolio.Dominio.ValueObjects;
+using Portifolio.Dominio.Entidades;
 
 namespace Portifolio.Infraestrutura.Data.Configuration
 {
