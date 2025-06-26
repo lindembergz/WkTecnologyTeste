@@ -2,13 +2,14 @@
 using Portifolio.Dominio.ValueObjects; // Para Product, ProductName, Price (se existisse), FuelType (se existisse)
 using Portifolio.Dominio.Repositories;    // Para IProductRepository, ICategoryRepository
 using Portifolio.Aplicacao.DTOs;        // Para ProductDto, CreateProductDto, UpdateProductDto
-using Portifolio.Aplicacao.Common;      // Para PagedResult
-using Portifolio.Aplicacao.Query;         // Para ProductQuery
+using Portifolio.Core;      // Para PagedResult
+
 using FluentValidation;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
 // using Microsoft.VisualBasic.FileIO; // Parece não utilizado
-using System.Diagnostics; // Parece não utilizado diretamente, talvez por alguma dependência transitiva
+using System.Diagnostics;
+using Portifolio.Domain.Query; // Parece não utilizado diretamente, talvez por alguma dependência transitiva
 
 namespace Portifolio.Aplicacao.Servicos
 {

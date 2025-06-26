@@ -1,4 +1,4 @@
-using Portifolio.Aplicacao.Common;
+using Portifolio.Core;
 using Portifolio.Aplicacao.DTOs;
 using System.Threading;
 using System.Threading.Tasks;

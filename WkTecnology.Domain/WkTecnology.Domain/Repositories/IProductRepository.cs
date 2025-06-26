@@ -1,6 +1,6 @@
-using Portifolio.Dominio.ValueObjects; // Product está aqui
-using Portifolio.Aplicacao.Common;    // Para PagedResult
-using Portifolio.Aplicacao.Query;     // Para ProductQuery
+using Portifolio.Core;
+using Portifolio.Domain.Query;
+using Portifolio.Dominio.Entidades;   // Para ProductQuery
 
 namespace Portifolio.Dominio.Repositories
 {

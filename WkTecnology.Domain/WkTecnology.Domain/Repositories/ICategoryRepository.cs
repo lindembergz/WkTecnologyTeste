@@ -1,5 +1,5 @@
 using Portifolio.Dominio.Entidades;
-using Portifolio.Aplicacao.Common; // Para PagedResult e PagedQuery, se necessário
+using Portifolio.Core; // Para PagedResult e PagedQuery, se necessário
 
 namespace Portifolio.Dominio.Repositories
 {

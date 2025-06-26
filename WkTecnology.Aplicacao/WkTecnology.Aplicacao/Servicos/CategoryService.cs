@@ -1,4 +1,4 @@
-using Portifolio.Aplicacao.Common;
+using Portifolio.Core;
 using Portifolio.Aplicacao.DTOs;
 using Portifolio.Dominio.Entidades;
 using Portifolio.Dominio.Repositories;
@@ -63,10 +63,15 @@ namespace Portifolio.Aplicacao.Servicos
                 {
                     throw new ArgumentException($"Parent category with ID {createCategoryDto.ParentCategoryId.Value} not found.");
                 }
+
             }
 
+            // The error CS0144 indicates that 'CategoryName' is an abstract class or interface, and thus cannot be instantiated directly.
+            // To fix this, we need to ensure that 'CategoryName' has a concrete implementation or factory method to create an instance.
+            // Assuming 'CategoryName' has a static factory method or a derived concrete class, we can modify the instantiation as follows:
+
             var category = new Category(
-                new CategoryName(createCategoryDto.Name),
+                CategoryName.Create(createCategoryDto.Name), // Assuming a static factory method 'Create' exists in 'CategoryName'
                 createCategoryDto.Description ?? string.Empty,
                 createCategoryDto.ParentCategoryId
             );
@@ -103,13 +108,20 @@ namespace Portifolio.Aplicacao.Servicos
             }
 
             category.UpdateDetails(
-                new CategoryName(updateCategoryDto.Name),
+                CategoryName.Create(updateCategoryDto.Name),
                 updateCategoryDto.Description ?? string.Empty
             );
             // A entidade Category.cs atual não fornece um método público para alterar ParentCategoryId
             // após a instanciação. O método UpdateDetails apenas altera Name e Description.
             // Para que ParentCategoryId seja atualizável, a entidade Category precisaria ser modificada
             // para incluir um método como `ChangeParent(int? newParentCategoryId)`.
+            // Fix for CS0122: "CategoryName.CategoryName(string)" é inacessível devido ao seu nível de proteção
+            // The constructor for `CategoryName` is inaccessible. Based on the provided context, it seems that `CategoryName` has a static factory method `Create` that should be used to instantiate it.
+
+            category.UpdateDetails(
+                CategoryName.Create(updateCategoryDto.Name), // Use the static factory method `Create` to instantiate `CategoryName`
+                updateCategoryDto.Description ?? string.Empty
+            );
             // Portanto, a alteração de ParentCategoryId em updateCategoryDto não terá efeito
             // na persistência com a estrutura atual da entidade Category.
             // Se updateCategoryDto.ParentCategoryId for diferente do valor existente em category.ParentCategoryId,

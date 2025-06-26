@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Domain.Entities;
-using Portifolio.Dominio.Base;
+using Portifolio.Core;
 using Portifolio.Dominio.Entidades;
 using Portifolio.Infraestrutura.Data.Configuration;
-using Portifolio.Dominio.ValueObjects;
 
 namespace Portifolio.Infraestrutura.Data;
 

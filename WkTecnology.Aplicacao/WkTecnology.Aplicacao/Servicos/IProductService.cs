@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Portifolio.Aplicacao.Common;
+using Portifolio.Core;
 using Portifolio.Aplicacao.DTOs;
-using Portifolio.Aplicacao.Query;
+using Portifolio.Domain.Query;
 
 namespace Portifolio.Aplicacao.Servicos
 {
