@@ -22,6 +22,10 @@ namespace Portifolio.Infraestrutura.Data.Configuration
                     .HasColumnName("Name")
                     .HasMaxLength(200)
                     .IsRequired();
+
+                // Adicione o índice aqui:
+                name.HasIndex(n => n.Value)
+                    .HasDatabaseName("IX_Products_Name");
             });
 
             builder.Property(p => p.Description)
@@ -60,8 +64,6 @@ namespace Portifolio.Infraestrutura.Data.Configuration
                 .OnDelete(DeleteBehavior.Restrict);
 
             // Indexes
-            builder.HasIndex(p => p.Name.Value)
-                .HasDatabaseName("IX_Products_Name");
 
             builder.HasIndex(p => new { p.Brand, p.Model })
                 .HasDatabaseName("IX_Products_Brand_Model");

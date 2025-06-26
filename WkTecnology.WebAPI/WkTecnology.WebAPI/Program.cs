@@ -1,19 +1,16 @@
 using FluentValidation;
 using System.Threading.RateLimiting;
 using Microsoft.AspNetCore.RateLimiting;
-using Portifolio.Aplicacao.Servicos;     // Para IProductService, ProductService, ICategoryService, CategoryService
-using Portifolio.Dominio.Repositories;  // Para IProductRepository, ICategoryRepository
-using Portifolio.Infraestrutura.Repositories; // Para ProductRepository, CategoryRepository
+using Portifolio.Aplicacao.Servicos;     
+using Portifolio.Dominio.Repositories;  
+using Portifolio.Infraestrutura.Repositories; 
 using Portifolio.Aplicacao.Validators;
 using Portifolio.Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.OpenApi.Models;
+using ICiProvaCandidato.Dominio.UoW;
 // O using FluentValidation repetido pode ser removido.
-
-
-// Existing code remains unchanged
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,13 +32,17 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.InstanceName = "VehicleSales";
 });
 
-// Services
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Repositories
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+// Services
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+
 
 // Validators
 builder.Services.AddValidatorsFromAssemblyContaining<CreateProductDtoValidator>();

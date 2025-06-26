@@ -28,6 +28,19 @@ namespace Portifolio.Infraestrutura.Data.Configuration
                     .IsRequired();
             });
 
+            builder.OwnsOne(c => c.Name, name =>
+            {
+                name.Property(n => n.Value)
+                    .HasColumnName("Name")
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                // Adicione o índice aqui:
+                name.HasIndex(n => n.Value)
+                    .IsUnique()
+                    .HasDatabaseName("IX_Categories_Name");
+            });
+
             builder.Property(c => c.Description)
                 .HasMaxLength(500);
 
@@ -44,11 +57,6 @@ namespace Portifolio.Infraestrutura.Data.Configuration
                 .WithMany(c => c.SubCategories)
                 .HasForeignKey(c => c.ParentCategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            // Indexes
-            builder.HasIndex(c => c.Name.Value)
-                .IsUnique()
-                .HasDatabaseName("IX_Categories_Name");
 
             builder.HasIndex(c => c.ParentCategoryId)
                 .HasDatabaseName("IX_Categories_ParentCategoryId");
