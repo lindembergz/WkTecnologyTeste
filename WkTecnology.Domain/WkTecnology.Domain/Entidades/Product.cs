@@ -7,18 +7,18 @@ namespace Portifolio.Dominio.Entidades
 {
     public class Product : BaseEntity
     {
-        public ProductName Name { get; private set; }
-        public string Description { get; private set; }
-        public string Brand { get; private set; }
-        public string Model { get; private set; }
-        public int Year { get; private set; }
-        public string Color { get; private set; }
-        public int Mileage { get; private set; }
-        public bool IsActive { get; private set; }
-        public int CategoryId { get; private set; }
-        public Category Category { get; private set; }
+        public ProductName Name { get; private set; } // Nome
+        public string Description { get; private set; } // Descrição
+        public string Brand { get; private set; } // Marca
+        public string Model { get; private set; }  // Modelo
+        public int Year { get; private set; } // Ano
+        public string Color { get; private set; }   // Cor
+        public int Mileage { get; private set; } // Quilometragem
+        public bool IsActive { get; private set; } // Indica se o produto está ativo
+        public int CategoryId { get; private set; } // ID da categoria do produto
+        public Category Category { get; private set; } // Categoria do produto  
 
-        private Product() { } // EF Core
+        private Product() { } 
 
         public Product(ProductName name, string description, string brand,
                       string model, int year, string color,
@@ -59,14 +59,14 @@ namespace Portifolio.Dominio.Entidades
         {
             var currentYear = DateTime.Now.Year;
             if (year < 1900 || year > currentYear + 1)
-                throw new ArgumentException($"Year must be between 1900 and {currentYear + 1}");
+                throw new ArgumentException($"Ano deve ter um valor entre 1900 and {currentYear + 1}");
             return year;
         }
 
         private static int ValidateMileage(int mileage)
         {
             if (mileage < 0)
-                throw new ArgumentException("Mileage cannot be negative");
+                throw new ArgumentException("Quilometragem não pode ser negativa");
             return mileage;
         }
 

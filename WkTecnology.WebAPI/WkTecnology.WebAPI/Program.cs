@@ -10,11 +10,10 @@ using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.OpenApi.Models;
 using ICiProvaCandidato.Dominio.UoW;
-// O using FluentValidation repetido pode ser removido.
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Database
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
@@ -25,7 +24,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
             mysqlOptions.CommandTimeout(30);
         }));
 
-// Redis Cache
 builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
@@ -34,20 +32,16 @@ builder.Services.AddStackExchangeRedisCache(options =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-// Repositories
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
-// Services
+
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 
-
-// Validators
 builder.Services.AddValidatorsFromAssemblyContaining<CreateProductDtoValidator>();
 
-// Rate Limiting
 builder.Services.AddRateLimiter(options =>
 {
     options.AddFixedWindowLimiter("DefaultPolicy", opt =>
@@ -83,7 +77,6 @@ builder.Services.AddRateLimiter(options =>
     });
 });
 
-// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularApp", policy =>
@@ -96,7 +89,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Swagger
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -111,15 +104,10 @@ builder.Services.AddSwaggerGen(c =>
             Email = "dev@vehiclesales.com"
         }
     });
-
-    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-    c.IncludeXmlComments(xmlPath);
 });
 
 builder.Services.AddControllers();
 
-// Logging
 builder.Services.AddLogging(logging =>
 {
     logging.ClearProviders();
@@ -129,7 +117,6 @@ builder.Services.AddLogging(logging =>
 
 var app = builder.Build();
 
-// Configure pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -146,7 +133,6 @@ app.UseRateLimiter();
 app.UseRouting();
 app.MapControllers();
 
-// Database migration
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

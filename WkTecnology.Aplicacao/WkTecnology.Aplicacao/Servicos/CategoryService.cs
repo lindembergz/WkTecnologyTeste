@@ -53,27 +53,23 @@ namespace Portifolio.Aplicacao.Servicos
 
         public async Task<CategoryDto> CreateCategoryAsync(CreateCategoryDto createCategoryDto, CancellationToken cancellationToken = default)
         {
-            // TODO: Adicionar validação para createCategoryDto (ex: FluentValidation)
-            // Ex: await _createValidator.ValidateAndThrowAsync(createCategoryDto, cancellationToken);
+            int? parentCategoryId = createCategoryDto.ParentCategoryId;
+            if (parentCategoryId == 0)
+                parentCategoryId = null;
 
-            if (createCategoryDto.ParentCategoryId.HasValue)
+            if (parentCategoryId.HasValue)
             {
-                var parentExists = await _categoryRepository.ExistsAsync(createCategoryDto.ParentCategoryId.Value, cancellationToken);
+                var parentExists = await _categoryRepository.ExistsAsync(parentCategoryId.Value, cancellationToken);
                 if (!parentExists)
                 {
-                    throw new ArgumentException($"Parent category with ID {createCategoryDto.ParentCategoryId.Value} not found.");
+                    throw new ArgumentException($"Parent category with ID {parentCategoryId.Value} not found.");
                 }
-
             }
 
-            // The error CS0144 indicates that 'CategoryName' is an abstract class or interface, and thus cannot be instantiated directly.
-            // To fix this, we need to ensure that 'CategoryName' has a concrete implementation or factory method to create an instance.
-            // Assuming 'CategoryName' has a static factory method or a derived concrete class, we can modify the instantiation as follows:
-
             var category = new Category(
-                CategoryName.Create(createCategoryDto.Name), // Assuming a static factory method 'Create' exists in 'CategoryName'
+                CategoryName.Create(createCategoryDto.Name),
                 createCategoryDto.Description ?? string.Empty,
-                createCategoryDto.ParentCategoryId
+                parentCategoryId
             );
 
             await _categoryRepository.AddAsync(category, cancellationToken);
@@ -81,6 +77,7 @@ namespace Portifolio.Aplicacao.Servicos
 
             return MapToDto(category);
         }
+
 
         public async Task<CategoryDto?> UpdateCategoryAsync(int id, UpdateCategoryDto updateCategoryDto, CancellationToken cancellationToken = default)
         {

@@ -13,6 +13,8 @@ namespace Portifolio.Domain.Query
         public string? Name { get; set; }
         public bool? IsActive { get; set; }
 
+        public ProductQuery() { }
+
         public ProductQuery(int page = 1, int pageSize = 10, string? search = null, string? sortBy = null, bool sortDescending = false)
             : base(page, pageSize, search, sortBy, sortDescending) // Adjusted to match the constructor of PagedQuery  
         {
@@ -22,3 +24,5 @@ namespace Portifolio.Domain.Query
         }
     }
 }
+
+

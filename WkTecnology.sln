@@ -13,13 +13,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portifolio.Infraestrutura",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portifolio.Aplicacao", "WkTecnology.Aplicacao\WkTecnology.Aplicacao\Portifolio.Aplicacao.csproj", "{670E9B90-2BB1-4631-AE4B-C5C47DAAD352}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{EE667042-CC72-42D3-A235-A02809F2E6DB}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{EE667042-CC72-42D3-A235-A02809F2E6DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WkTecnology.WebAPI", "WkTecnology.WebAPI\WkTecnology.WebAPI\WkTecnology.WebAPI.csproj", "{7A26BEE4-E1FA-4D7D-8F45-4A6053478C11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WkTecnology.Core", "WkTecnology.Core\WkTecnology.Core\WkTecnology.Core.csproj", "{0BF6FD38-CD13-47AA-97EA-7A82A450ABE3}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CORE", "CORE", "{17309521-9E6E-4073-9898-2A8E90524978}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{17309521-9E6E-4073-9898-2A8E90524978}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{12A46833-2739-4477-9A68-F33B77E5ABFC}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "WkTecnology.Presentation", "WkTecnology.Presentation\WkTecnology.Portifolio\WkTecnology.Portifolio.esproj", "{E97BDCCE-3A86-A6E2-7770-C29E0FB26627}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,12 @@ Global
 		{0BF6FD38-CD13-47AA-97EA-7A82A450ABE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BF6FD38-CD13-47AA-97EA-7A82A450ABE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BF6FD38-CD13-47AA-97EA-7A82A450ABE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E97BDCCE-3A86-A6E2-7770-C29E0FB26627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E97BDCCE-3A86-A6E2-7770-C29E0FB26627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E97BDCCE-3A86-A6E2-7770-C29E0FB26627}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E97BDCCE-3A86-A6E2-7770-C29E0FB26627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E97BDCCE-3A86-A6E2-7770-C29E0FB26627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E97BDCCE-3A86-A6E2-7770-C29E0FB26627}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +68,7 @@ Global
 		{670E9B90-2BB1-4631-AE4B-C5C47DAAD352} = {18E6BE21-E3F7-4419-BCBA-94F9FEF85D27}
 		{7A26BEE4-E1FA-4D7D-8F45-4A6053478C11} = {EE667042-CC72-42D3-A235-A02809F2E6DB}
 		{0BF6FD38-CD13-47AA-97EA-7A82A450ABE3} = {17309521-9E6E-4073-9898-2A8E90524978}
+		{E97BDCCE-3A86-A6E2-7770-C29E0FB26627} = {12A46833-2739-4477-9A68-F33B77E5ABFC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {51D1C54C-236E-42DA-9944-F3FF9E41C62F}

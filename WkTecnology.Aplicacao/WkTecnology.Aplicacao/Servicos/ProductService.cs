@@ -16,7 +16,7 @@ namespace Portifolio.Aplicacao.Servicos
     public class ProductService : IProductService
     {
         private readonly IProductRepository _productRepository;
-        private readonly ICategoryRepository _categoryRepository; // Usado para categoryExists
+        private readonly ICategoryRepository _categoryRepository; 
         private readonly IDistributedCache _cache;
         private readonly IValidator<CreateProductDto> _createValidator;
         private readonly IValidator<UpdateProductDto> _updateValidator;
@@ -84,32 +84,21 @@ namespace Portifolio.Aplicacao.Servicos
             if (!categoryExists)
                 throw new ArgumentException($"Category with ID {createProductDto.CategoryId} does not exist");
 
-            // Ajustado para o construtor de Product.cs:
-            // public Product(ProductName name, string description, string brand, string model, int year, string color, int mileage, int categoryId)
-            // createProductDto.Name precisará ser encapsulado em ProductName se o validador/controller não o fizer.
-            // Por enquanto, assumindo que CreateProductDto terá ProductName ou que o construtor de Product aceita string para o nome.
-            // A entidade Product tem `public ProductName Name { get; private set; }` e construtor `Product(ProductName name, ...)`
-            // Então, precisamos de `new ProductName(createProductDto.Name)`
+
             var product = new Product(
-                new ProductName(createProductDto.Name), // Ajustado para ProductName
+                new ProductName(createProductDto.Name), 
                 createProductDto.Description,
-                // Removido: new Price(createProductDto.Price),
                 createProductDto.Brand,
                 createProductDto.Model,
                 createProductDto.Year,
                 createProductDto.Color,
-                // Removido: (FuelType)createProductDto.FuelType,
                 createProductDto.Mileage,
                 createProductDto.CategoryId
             );
 
-            // Removido: Lógica de Add images
-            // Removido: Lógica de Add specifications
-
             await _productRepository.AddAsync(product, cancellationToken);
             await _productRepository.SaveChangesAsync(cancellationToken);
 
-            // Invalidate cache
             await InvalidateProductCacheAsync();
 
             return MapToDto(product);
@@ -194,21 +183,17 @@ namespace Portifolio.Aplicacao.Servicos
                 product.Id,
                 product.Name.Value, // ProductName é um ValueObject, pegamos o .Value
                 product.Description,
-                // Removido: product.Price.Amount,
-                // Removido: product.Price.Currency,
                 product.Brand,
                 product.Model,
                 product.Year,
                 product.Color,
-                // Removido: product.FuelType.ToString(),
                 product.Mileage,
                 product.IsActive,
                 product.CategoryId,
                 product.Category?.Name.Value ?? string.Empty, // Category.Name é CategoryName
                 product.CreatedAt,
                 product.UpdatedAt
-                // Removido: product.Images...
-                // Removido: product.Specifications...
+
             );
         }
 
@@ -228,9 +213,6 @@ namespace Portifolio.Aplicacao.Servicos
         {
             if (productId.HasValue)
                 await _cache.RemoveAsync($"product:{productId}");
-
-            // In production, use Redis pattern matching to clear all product list caches
-            // For simplicity, we're just clearing specific keys
         }
 
         private static string GenerateCacheKey(string prefix, object query)
