@@ -1,6 +1,7 @@
 ﻿CREATE DATABASE `vehiclesalesdb;
 
 
+
 CREATE TABLE `Products` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(200) NOT NULL,
