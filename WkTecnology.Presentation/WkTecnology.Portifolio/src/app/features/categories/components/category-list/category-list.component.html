@@ -1,0 +1,79 @@
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+<div class="card">
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <h2>Categorias</h2>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <button pButton pRipple label="Nova Categoria" icon="pi pi-plus" class="p-button-success" (click)="navigateToCreateCategory()"></button>
+    </ng-template>
+  </p-toolbar>
+
+  <!-- TODO: Adicionar input de pesquisa/filtro aqui -->
+
+  <p-table
+    #dt
+    [value]="categories"
+    [responsive]="true"
+    [loading]="isLoading"
+    dataKey="id"
+    styleClass="p-datatable-customers"
+    [rowHover]="true"
+    [rows]="10"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [paginator]="categories.length > 10"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} categorias"
+    [globalFilterFields]="['name', 'description']">
+
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-end">
+        <!-- Exemplo de input de filtro global para a tabela, pode ser melhorado -->
+        <span class="p-input-icon-left ml-auto">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Pesquisar..." />
+        </span>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="description">Descrição <p-sortIcon field="description"></p-sortIcon></th>
+        <th pSortableColumn="isActive">Ativo <p-sortIcon field="isActive"></p-sortIcon></th>
+        <th>Ações</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-category>
+      <tr>
+        <td>{{category.name}}</td>
+        <td>{{category.description}}</td>
+        <td>
+          <p-tag [value]="category.isActive ? 'Sim' : 'Não'" [severity]="category.isActive ? 'success' : 'danger'"></p-tag>
+        </td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="navigateToEditCategory(category.id)" pTooltip="Editar"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteCategory(category.id)" pTooltip="Excluir"></button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="text-center">Nenhuma categoria encontrada.</td>
+      </tr>
+    </ng-template>
+
+     <ng-template pTemplate="loadingbody">
+      <tr>
+        <td colspan="4" class="text-center">
+          <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+          <p>Carregando categorias...</p>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,61 @@
+/* Estilos específicos para CategoryListComponent */
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+/* Garante que o ícone de carregamento e mensagem de "nenhuma categoria" fiquem bem centralizados */
+:host ::ng-deep .p-datatable-emptymessage td,
+:host ::ng-deep .p-datatable-loadingbody td {
+    text-align: center !important;
+    justify-content: center;
+}
+
+/* Ajustes na toolbar para espaçamento */
+:host ::ng-deep .p-toolbar {
+  margin-bottom: 1rem; /* Ou o valor que preferir */
+}
+
+/* Ajustes no paginador e cabeçalho da tabela */
+:host ::ng-deep .p-datatable .p-paginator-bottom {
+  border-top: 1px solid var(--surface-d);
+}
+
+:host ::ng-deep .p-datatable .p-datatable-header {
+  border-bottom: 1px solid var(--surface-d);
+}
+
+/* Estilo para o input de pesquisa global */
+.p-input-icon-left > .p-inputtext {
+  padding-left: 2.5rem;
+}
+/* Adicionar um espaçamento à direita do botão de nova categoria */
+:host ::ng-deep .p-toolbar-group-right .p-button {
+    margin-left: 0.5rem;
+}
+
+/* Centralizar o texto do cabeçalho da tabela */
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    text-align: left;
+}
+
+/* Centralizar o conteúdo das células do corpo da tabela */
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* Estilizar os botões de ação para que fiquem mais compactos e alinhados */
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td .p-button {
+    margin-right: 0.25rem; /* Espaço entre os botões */
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td .p-button:last-child {
+    margin-right: 0;
+}
+
+/* Melhorar a aparência do p-tag */
+:host ::ng-deep .p-tag {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+}

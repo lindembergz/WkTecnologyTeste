@@ -1,0 +1,52 @@
+<p-toast></p-toast> <!-- Para exibir mensagens de sucesso/erro -->
+
+<div class="card">
+  <p-card [header]="pageTitle">
+    <div *ngIf="isLoading" class="text-center my-3">
+      <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+      <p>Carregando...</p>
+    </div>
+
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+      <div class="p-fluid grid">
+        <!-- Campo Nome -->
+        <div class="field col-12">
+          <label for="name">Nome da Categoria</label>
+          <input id="name" type="text" pInputText formControlName="name" />
+          <small *ngIf="f['name'].touched && f['name'].errors?.['required']" class="p-error">
+            Nome é obrigatório.
+          </small>
+          <small *ngIf="f['name'].touched && f['name'].errors?.['minlength']" class="p-error">
+            Nome deve ter no mínimo {{ f['name'].errors?.['minlength']?.requiredLength }} caracteres.
+          </small>
+           <small *ngIf="f['name'].touched && f['name'].errors?.['maxlength']" class="p-error">
+            Nome deve ter no máximo {{ f['name'].errors?.['maxlength']?.requiredLength }} caracteres.
+          </small>
+        </div>
+
+        <!-- Campo Descrição -->
+        <div class="field col-12">
+          <label for="description">Descrição</label>
+          <textarea id="description" pInputTextarea formControlName="description" rows="3" [autoResize]="true"></textarea>
+          <small *ngIf="f['description'].touched && f['description'].errors?.['maxlength']" class="p-error">
+            Descrição deve ter no máximo {{ f['description'].errors?.['maxlength']?.requiredLength }} caracteres.
+          </small>
+        </div>
+
+        <!-- Campo Ativo -->
+        <div class="field col-12 md:col-6">
+          <label for="isActive" class="mr-2">Ativo</label>
+          <p-inputSwitch id="isActive" formControlName="isActive"></p-inputSwitch>
+        </div>
+
+        <!-- TODO: Adicionar campo para Parent Category (p-dropdown) se necessário -->
+
+      </div>
+
+      <div class="p-dialog-footer mt-4">
+        <button pButton pRipple type="button" label="Cancelar" icon="pi pi-times" class="p-button-text" (click)="onCancel()"></button>
+        <button pButton pRipple type="submit" label="Salvar" icon="pi pi-check" [loading]="isLoading" [disabled]="categoryForm.invalid || isLoading"></button>
+      </div>
+    </form>
+  </p-card>
+</div>
