@@ -23,6 +23,7 @@ O projeto é preparado para ser **resiliente** , **alta escalabilidade**, **vali
 - FluentValidation  
 - Swagger / OpenAPI  
 - Docker (para bancos e cache)
+- Angular + PrimeNG
 
 ---
 
@@ -31,6 +32,7 @@ O projeto é preparado para ser **resiliente** , **alta escalabilidade**, **vali
 - .NET 8 SDK  
 -  MySql 8+ 
 - Node.js 15+ e Angular CLI (opcional, para rodar o frontend)
+
 
 ---
 
