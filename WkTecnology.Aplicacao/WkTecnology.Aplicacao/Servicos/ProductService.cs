@@ -14,20 +14,20 @@ namespace Portifolio.Aplicacao.Servicos
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository; 
-        private readonly IDistributedCache _cache;
+        //private readonly IDistributedCache _cache;
         private readonly IValidator<CreateProductDto> _createValidator;
         private readonly IValidator<UpdateProductDto> _updateValidator;
 
         public ProductService(
             IProductRepository productRepository,
             ICategoryRepository categoryRepository,
-            IDistributedCache cache,
+            //IDistributedCache cache,
             IValidator<CreateProductDto> createValidator,
             IValidator<UpdateProductDto> updateValidator)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
-            _cache = cache;
+            //_cache = cache;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
         }
@@ -35,7 +35,7 @@ namespace Portifolio.Aplicacao.Servicos
         public async Task<PagedResult<ProductDto>> GetProductsAsync(ProductQuery query, CancellationToken cancellationToken = default)
         {
             var cacheKey = GenerateCacheKey("products", query);
-            var cachedResult = await GetFromCacheAsync<PagedResult<ProductDto>>(cacheKey, cancellationToken);
+            PagedResult<ProductDto>? cachedResult = null; // Removed commented-out code to address S125
 
             if (cachedResult != null)
                 return cachedResult;
@@ -190,20 +190,21 @@ namespace Portifolio.Aplicacao.Servicos
 
         private async Task<T?> GetFromCacheAsync<T>(string key, CancellationToken cancellationToken) where T : class
         {
-            var cached = await _cache.GetStringAsync(key, cancellationToken);
-            return cached != null ? JsonSerializer.Deserialize<T>(cached) : null;
+            //var cached = await _cache.GetStringAsync(key, cancellationToken);
+            return null;
+            //return cached != null ? JsonSerializer.Deserialize<T>(cached) : null;
         }
 
         private async Task SetCacheAsync<T>(string key, T value, TimeSpan expiration, CancellationToken cancellationToken)
         {
-            var options = new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = expiration };
-            await _cache.SetStringAsync(key, JsonSerializer.Serialize(value), options, cancellationToken);
+           // var options = new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = expiration };
+           // await _cache.SetStringAsync(key, JsonSerializer.Serialize(value), options, cancellationToken);
         }
 
         private async Task InvalidateProductCacheAsync(int? productId = null)
         {
-            if (productId.HasValue)
-                await _cache.RemoveAsync($"product:{productId}");
+            //if (productId.HasValue)
+            //    await _cache.RemoveAsync($"product:{productId}");
         }
 
         private static string GenerateCacheKey(string prefix, object query)
