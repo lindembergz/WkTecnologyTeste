@@ -9,6 +9,11 @@ import { AppComponent } from './app.component';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 
+// PrimeNG Modules for Toolbar Navigation
+import { ToolbarModule } from 'primeng/toolbar';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple'; // Ripple é frequentemente usado com ButtonModule
+
 @NgModule({
   declarations: [
     AppComponent
@@ -17,7 +22,11 @@ import Aura from '@primeng/themes/aura';
     BrowserModule,
     BrowserAnimationsModule, // Adicionar BrowserAnimationsModule
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    // PrimeNG Modules for AppComponent
+    ToolbarModule,
+    ButtonModule,
+    RippleModule
   ],
   providers: [    
       providePrimeNG({

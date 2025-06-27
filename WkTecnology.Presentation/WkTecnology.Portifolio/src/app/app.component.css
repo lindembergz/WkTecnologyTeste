@@ -1,0 +1,46 @@
+/* AppComponent Styles */
+:host ::ng-deep .p-toolbar {
+    border-bottom: 1px solid var(--surface-border); /* Adiciona uma borda sutil abaixo do toolbar */
+    /* margin-bottom: 1rem; */ /* Removido para que o padding do content-wrapper controle o espaço */
+    border-radius: 0; /* Para remover cantos arredondados se houver e ocupar a largura toda */
+}
+
+/* Estilo para o link ativo na navegação */
+:host ::ng-deep .p-button.p-button-text.active-link {
+    color: var(--primary-color) !important;
+    /* background-color: color-mix(in srgb, var(--primary-color) 15%, transparent); */ /* Fundo sutil para o botão ativo */
+}
+
+/* Wrapper para o conteúdo principal para adicionar padding */
+.content-wrapper {
+  padding: 1.5rem; /* Ajuste o padding conforme necessário */
+  background-color: var(--surface-ground); /* Cor de fundo para a área de conteúdo, se diferente do body */
+  min-height: calc(100vh - 70px); /* Exemplo: Altura total da tela menos a altura aproximada do toolbar */
+}
+
+/* Garante que o logo e o título fiquem bem alinhados */
+:host ::ng-deep .p-toolbar-group-left .p-button,
+:host ::ng-deep .p-toolbar-group-left img,
+:host ::ng-deep .p-toolbar-group-left span {
+    vertical-align: middle;
+}
+
+:host ::ng-deep .p-toolbar-group-left span {
+    margin-left: 0.5rem; /* Espaço entre logo e título */
+}
+
+/* Ajustes para responsividade do toolbar se necessário */
+@media screen and (max-width: 640px) { /* Exemplo de breakpoint */
+  :host ::ng-deep .p-toolbar-group-left span.font-bold.text-xl {
+    font-size: 1rem; /* Diminui o tamanho da fonte do título em telas pequenas */
+  }
+  :host ::ng-deep .p-toolbar-group-right .p-button {
+    margin-left: 0.25rem; /* Reduz a margem entre os botões */
+  }
+  :host ::ng-deep .p-button .p-button-label {
+    font-size: 0.875rem; /* Diminui o label dos botões */
+  }
+   .content-wrapper {
+    padding: 1rem;
+  }
+}

@@ -1,4 +1,16 @@
+<p-toolbar>
+    <div class="p-toolbar-group-left">
+        <img src="assets/logo.png" alt="Wk Tecnologia Logo" style="height: 40px; margin-right: 15px;"> <!-- Ajuste o caminho e estilo conforme necessário -->
+        <span class="font-bold text-xl">Gestão de Veículos</span>
+    </div>
 
+    <div class="p-toolbar-group-right">
+        <button pButton pRipple label="Produtos" icon="pi pi-car" class="p-button-text" routerLink="/products" routerLinkActive="active-link"></button>
+        <button pButton pRipple label="Categorias" icon="pi pi-tags" class="p-button-text" routerLink="/categories" routerLinkActive="active-link"></button>
+        <!-- Adicionar mais links de navegação aqui se necessário -->
+    </div>
+</p-toolbar>
 
-
-<router-outlet />
+<div class="content-wrapper p-3"> <!-- Adiciona um wrapper para o conteúdo com padding -->
+    <router-outlet></router-outlet>
+</div>

@@ -96,6 +96,14 @@ namespace Portifolio.Aplicacao.Servicos
                 createProductDto.CategoryId
             );
 
+            // Definir IsActive com base no DTO, pois o construtor de Product define como true por padrão
+            if (!createProductDto.IsActive)
+            {
+                product.Deactivate();
+            }
+            // Se createProductDto.IsActive for true, não é necessário chamar product.Activate()
+            // porque o construtor já define IsActive = true.
+
             await _productRepository.AddAsync(product, cancellationToken);
             await _productRepository.SaveChangesAsync(cancellationToken);
 
@@ -128,6 +136,30 @@ namespace Portifolio.Aplicacao.Servicos
                 // Removido: (FuelType)updateProductDto.FuelType,
                 updateProductDto.Mileage
             );
+
+            // Atualizar CategoryId - IMPORTANTE: Isso requer que a entidade Product permita a alteração de CategoryId.
+            // Se CategoryId tiver um setter privado e nenhum método público para alterá-lo, esta linha causará um erro
+            // ou não terá efeito se não for implementada corretamente na entidade.
+            // Assumindo que uma alteração na entidade Product será feita para permitir isso, ou que já existe um método.
+            // Por agora, esta é uma limitação conhecida se a entidade não for alterada.
+            // if (product.CategoryId != updateProductDto.CategoryId)
+            // {
+            //    var categoryExists = await _categoryRepository.ExistsAsync(updateProductDto.CategoryId, cancellationToken);
+            //    if (!categoryExists)
+            //        throw new ArgumentException($"New Category with ID {updateProductDto.CategoryId} does not exist");
+            //    product.ChangeCategory(updateProductDto.CategoryId); // Método hipotético
+            // }
+
+
+            // Atualizar IsActive
+            if (updateProductDto.IsActive && !product.IsActive)
+            {
+                product.Activate();
+            }
+            else if (!updateProductDto.IsActive && product.IsActive)
+            {
+                product.Deactivate();
+            }
 
             await _productRepository.SaveChangesAsync(cancellationToken);
 

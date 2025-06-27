@@ -3,17 +3,20 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: 'products',
+    loadChildren: () => import('./features/products/products.module').then(m => m.ProductsModule)
+  },
+  {
     path: 'categories',
     loadChildren: () => import('./features/categories/categories.module').then(m => m.CategoriesModule)
   },
-  // Adicionar uma rota padrão, por exemplo, redirecionar para categories ou um dashboard
   {
     path: '',
-    redirectTo: 'categories', // Ou qualquer outra rota padrão desejada
+    redirectTo: 'products', // Definir /products como a rota padrão
     pathMatch: 'full'
   },
   // Adicionar uma rota wildcard para página não encontrada, se desejado
-  // { path: '**', component: PageNotFoundComponent },
+  // { path: '**', component: PageNotFoundComponent }, // Exemplo: criar um PageNotFoundComponent
 ];
 
 @NgModule({

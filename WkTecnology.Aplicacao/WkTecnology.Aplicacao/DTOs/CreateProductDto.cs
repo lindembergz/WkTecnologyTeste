@@ -12,7 +12,8 @@ namespace Portifolio.Aplicacao.DTOs
         string Color,
         // int FuelType, // Removido (tipo numérico, diferente de string no ProductDto original)
         int Mileage,
-        int CategoryId
+        int CategoryId,
+        bool IsActive = true // Adicionado para permitir controle na criação
         // List<string>? ImageUrls = null, // Removido
         // List<ProductSpecificationDto>? Specifications = null // Garantindo que não está aqui
     );
