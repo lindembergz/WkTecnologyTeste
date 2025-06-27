@@ -1,4 +1,4 @@
-<p-toast></p-toast> <!-- Para exibir mensagens de sucesso/erro -->
+<p-toast></p-toast> 
 
 <div class="card">
   <p-card [header]="pageTitle">
@@ -9,8 +9,7 @@
 
     <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
       <div class="p-fluid grid">
-        <!-- Campo Nome -->
-        <div class="field col-12">
+           <div class="field col-12">
           <label for="name">Nome da Categoria</label>
           <input id="name" type="text" pInputText formControlName="name" />
           <small *ngIf="f['name'].touched && f['name'].errors?.['required']" class="p-error">
@@ -24,7 +23,6 @@
           </small>
         </div>
 
-        <!-- Campo Descrição -->
         <div class="field col-12">
           <label for="description">Descrição</label>
           <textarea id="description" pInputTextarea formControlName="description" rows="3" [autoResize]="true"></textarea>
@@ -33,13 +31,11 @@
           </small>
         </div>
 
-        <!-- Campo Ativo -->
+
         <div class="field col-12 md:col-6">
           <label for="isActive" class="mr-2">Ativo</label>
           <p-inputSwitch id="isActive" formControlName="isActive"></p-inputSwitch>
         </div>
-
-        <!-- TODO: Adicionar campo para Parent Category (p-dropdown) se necessário -->
 
       </div>
 

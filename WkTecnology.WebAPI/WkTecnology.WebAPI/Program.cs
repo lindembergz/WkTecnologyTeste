@@ -7,7 +7,6 @@ using Portifolio.Infraestrutura.Repositories;
 using Portifolio.Aplicacao.Validators;
 using Portifolio.Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.OpenApi.Models;
 using ICiProvaCandidato.Dominio.UoW;
 

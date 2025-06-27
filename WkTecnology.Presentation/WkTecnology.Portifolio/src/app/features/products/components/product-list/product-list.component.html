@@ -4,7 +4,7 @@
 <div class="card">
   <p-toolbar styleClass="mb-4">
     <ng-template pTemplate="left">
-      <h2>Produtos</h2>
+      <h2>Veículos</h2>
     </ng-template>
     <ng-template pTemplate="right">
       <button pButton pRipple label="Novo Produto" icon="pi pi-plus" class="p-button-success" (click)="navigateToCreateProduct()"></button>
@@ -21,6 +21,7 @@
     [totalRecords]="totalRecords"
     [loading]="isLoading"
     dataKey="id"
+    
     styleClass="p-datatable-customers"
     [rowHover]="true"
     [rowsPerPageOptions]="[10, 25, 50, 100]"
@@ -45,7 +46,7 @@
         <th pSortableColumn="brand">Marca <p-sortIcon field="brand"></p-sortIcon></th>
         <th pSortableColumn="model">Modelo <p-sortIcon field="model"></p-sortIcon></th>
         <th pSortableColumn="year" style="width:8rem; text-align: center;">Ano <p-sortIcon field="year"></p-sortIcon></th>
-        <th pSortableColumn="mileage" style="width:10rem; text-align: right;">Quilometragem <p-sortIcon field="mileage"></p-sortIcon></th>
+        <th pSortableColumn="mileage" style="width:10rem; text-align: right;">Kilometragem <p-sortIcon field="mileage"></p-sortIcon></th>
         <th pSortableColumn="isActive" style="width:8rem; text-align: center;">Status <p-sortIcon field="isActive"></p-sortIcon></th>
         <th style="width:10rem; text-align: center;">Ações</th>
       </tr>
@@ -64,7 +65,7 @@
             [value]="product.isActive ? 'Ativo' : 'Inativo'"
             [severity]="product.isActive ? 'success' : 'danger'"
             (click)="toggleProductStatus(product)"
-            style="cursor: pointer;"
+            [style.cursor]="'pointer'"
             pTooltip="{{product.isActive ? 'Clique para desativar' : 'Clique para ativar'}}"
             tooltipPosition="top">
           </p-tag>

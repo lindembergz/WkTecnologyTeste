@@ -14,7 +14,7 @@ namespace Portifolio.Aplicacao.DTOs
         int Year,
         string Color,
         int Mileage,
-        int CategoryId, // Adicionado para permitir atualização da categoria
-        bool IsActive    // Adicionado para permitir atualização do status
+        int CategoryId 
+        //bool IsActive
     );
 }

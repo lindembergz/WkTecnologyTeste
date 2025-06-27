@@ -7,14 +7,13 @@ import { Category } from '../../../../core/models/category.model';
 import { UpdateCategoryPayload } from '../../../../core/models/category-payloads.model';
 import { MessageService } from 'primeng/api';
 
-// PrimeNG Modules - Experimental direct import for non-standalone component
 import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextarea } from 'primeng/inputtextarea';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonModule } from 'primeng/button';
-// RippleModule might be needed for pRipple on button, usually comes with ButtonModule or imported separately
+
 import { RippleModule } from 'primeng/ripple';
 
 
@@ -33,8 +32,8 @@ import { RippleModule } from 'primeng/ripple';
     InputSwitchModule,
     ButtonModule,
     RippleModule,
-    ToastModule, // Added for pRipple
-  ] // This is for standalone components. Angular might error here.
+    ToastModule, 
+  ] 
 
 })
 export class CategoryFormComponent implements OnInit {
@@ -69,7 +68,6 @@ export class CategoryFormComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       description: ['', [Validators.maxLength(255)]],
       isActive: [true, Validators.required]
-      // parentCategoryId: [null] // Adicionar se a lógica de subcategorias for implementada no form
     });
   }
 
@@ -81,7 +79,6 @@ export class CategoryFormComponent implements OnInit {
           name: category.name,
           description: category.description,
           isActive: category.isActive
-          // parentCategoryId: category.parentCategoryId
         });
         this.isLoading = false;
       },
@@ -89,7 +86,7 @@ export class CategoryFormComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao carregar dados da categoria.' });
         console.error(err);
         this.isLoading = false;
-        this.router.navigate(['/categories']); // Volta para a lista em caso de erro
+        this.router.navigate(['/categories']); 
       }
     });
   }
@@ -97,7 +94,6 @@ export class CategoryFormComponent implements OnInit {
   onSubmit(): void {
     if (this.categoryForm.invalid) {
       this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: 'Formulário inválido. Verifique os campos.' });
-      // Marcar todos os campos como tocados para exibir mensagens de erro
       Object.values(this.categoryForm.controls).forEach(control => {
         control.markAsTouched();
       });
@@ -112,7 +108,6 @@ export class CategoryFormComponent implements OnInit {
         name: formData.name,
         description: formData.description,
         isActive: formData.isActive,
-        // parentCategoryId: formData.parentCategoryId // Adicionar se o campo existir no form
       };
       this.categoryService.updateCategory(this.categoryId, updatePayload).subscribe({
         next: () => {
@@ -127,10 +122,6 @@ export class CategoryFormComponent implements OnInit {
         }
       });
     } else {
-      // Use formData, which is this.categoryForm.value
-      // Ensure the structure of formData matches what createCategory expects.
-      // If CreateCategoryPayload is defined and different, map formData to it.
-      // Assuming createCategory can take an object like { name, description, isActive }
       this.categoryService.createCategory(formData).subscribe({
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Categoria criada!' });
@@ -149,7 +140,5 @@ export class CategoryFormComponent implements OnInit {
   onCancel(): void {
     this.router.navigate(['/categories']);
   }
-
-  // Helper para acesso fácil aos controles do formulário no template
   get f() { return this.categoryForm.controls; }
 }

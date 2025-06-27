@@ -1,15 +1,12 @@
-﻿using Portifolio.Dominio.Entidades; // Para Category (se usado diretamente)
-using Portifolio.Dominio.ValueObjects; // Para Product, ProductName, Price (se existisse), FuelType (se existisse)
-using Portifolio.Dominio.Repositories;    // Para IProductRepository, ICategoryRepository
-using Portifolio.Aplicacao.DTOs;        // Para ProductDto, CreateProductDto, UpdateProductDto
-using Portifolio.Core;      // Para PagedResult
-
+﻿using Portifolio.Dominio.Entidades; 
+using Portifolio.Dominio.ValueObjects; 
+using Portifolio.Dominio.Repositories;    
+using Portifolio.Aplicacao.DTOs;        
+using Portifolio.Core;     
 using FluentValidation;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
-// using Microsoft.VisualBasic.FileIO; // Parece não utilizado
-using System.Diagnostics;
-using Portifolio.Domain.Query; // Parece não utilizado diretamente, talvez por alguma dependência transitiva
+using Portifolio.Domain.Query; 
 
 namespace Portifolio.Aplicacao.Servicos
 {
@@ -96,14 +93,6 @@ namespace Portifolio.Aplicacao.Servicos
                 createProductDto.CategoryId
             );
 
-            // Definir IsActive com base no DTO, pois o construtor de Product define como true por padrão
-            if (!createProductDto.IsActive)
-            {
-                product.Deactivate();
-            }
-            // Se createProductDto.IsActive for true, não é necessário chamar product.Activate()
-            // porque o construtor já define IsActive = true.
-
             await _productRepository.AddAsync(product, cancellationToken);
             await _productRepository.SaveChangesAsync(cancellationToken);
 
@@ -120,50 +109,21 @@ namespace Portifolio.Aplicacao.Servicos
             if (product == null)
                 throw new ArgumentException($"Product with ID {id} not found");
 
-            // Ajustado para UpdateBasicInfo(ProductName name, string description)
             product.UpdateBasicInfo(
-                new ProductName(updateProductDto.Name), // Ajustado para ProductName
+                new ProductName(updateProductDto.Name), 
                 updateProductDto.Description
-                // Removido: new Price(updateProductDto.Price)
             );
 
-            // Ajustado para UpdateVehicleDetails(string brand, string model, int year, string color, int mileage)
             product.UpdateVehicleDetails(
                 updateProductDto.Brand,
                 updateProductDto.Model,
                 updateProductDto.Year,
                 updateProductDto.Color,
-                // Removido: (FuelType)updateProductDto.FuelType,
                 updateProductDto.Mileage
             );
 
-            // Atualizar CategoryId - IMPORTANTE: Isso requer que a entidade Product permita a alteração de CategoryId.
-            // Se CategoryId tiver um setter privado e nenhum método público para alterá-lo, esta linha causará um erro
-            // ou não terá efeito se não for implementada corretamente na entidade.
-            // Assumindo que uma alteração na entidade Product será feita para permitir isso, ou que já existe um método.
-            // Por agora, esta é uma limitação conhecida se a entidade não for alterada.
-            // if (product.CategoryId != updateProductDto.CategoryId)
-            // {
-            //    var categoryExists = await _categoryRepository.ExistsAsync(updateProductDto.CategoryId, cancellationToken);
-            //    if (!categoryExists)
-            //        throw new ArgumentException($"New Category with ID {updateProductDto.CategoryId} does not exist");
-            //    product.ChangeCategory(updateProductDto.CategoryId); // Método hipotético
-            // }
-
-
-            // Atualizar IsActive
-            if (updateProductDto.IsActive && !product.IsActive)
-            {
-                product.Activate();
-            }
-            else if (!updateProductDto.IsActive && product.IsActive)
-            {
-                product.Deactivate();
-            }
-
             await _productRepository.SaveChangesAsync(cancellationToken);
 
-            // Invalidate cache
             await InvalidateProductCacheAsync(id);
 
             return MapToDto(product);
@@ -175,7 +135,7 @@ namespace Portifolio.Aplicacao.Servicos
             if (product == null)
                 return false;
 
-            product.Deactivate(); // Soft delete
+            product.Deactivate(); 
             await _productRepository.SaveChangesAsync(cancellationToken);
 
             await InvalidateProductCacheAsync(id);
@@ -210,10 +170,9 @@ namespace Portifolio.Aplicacao.Servicos
 
         private static ProductDto MapToDto(Product product)
         {
-            // Ajustado para refletir os campos reais de Product.cs e o ProductDto simplificado
             return new ProductDto(
                 product.Id,
-                product.Name.Value, // ProductName é um ValueObject, pegamos o .Value
+                product.Name.Value, 
                 product.Description,
                 product.Brand,
                 product.Model,
@@ -222,7 +181,7 @@ namespace Portifolio.Aplicacao.Servicos
                 product.Mileage,
                 product.IsActive,
                 product.CategoryId,
-                product.Category?.Name.Value ?? string.Empty, // Category.Name é CategoryName
+                product.Category?.Name.Value ?? string.Empty, 
                 product.CreatedAt,
                 product.UpdatedAt
 

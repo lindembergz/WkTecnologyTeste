@@ -1,41 +1,39 @@
-/* Styles for Product Form Component */
 
-/* Ajuste para o label do inputSwitch ficar ao lado e não abaixo em telas menores se necessário */
 :host ::ng-deep .field p-inputSwitch + label {
-  margin-left: 0.5rem; /* ou o espaçamento desejado */
-  vertical-align: middle; /* para alinhar verticalmente com o switch */
+  margin-left: 0.5rem; 
+  vertical-align: middle; 
 }
 
-/* Forçar largura total para pInputTextarea dentro de .p-fluid se não estiver funcionando */
+
 :host ::ng-deep .p-fluid .field .p-inputtextarea {
     width: 100%;
 }
 
-/* Margem para o grupo de botões do rodapé */
+
 .p-dialog-footer {
-    padding-top: 1.5rem; /* Adiciona espaço acima dos botões */
-    border-top: 1px solid var(--surface-border); /* Linha separadora opcional */
+    padding-top: 1.5rem; 
+    border-top: 1px solid var(--surface-border); 
 }
 
-/* Garante que o p-dropdown ocupe a largura no sistema de grid p-fluid */
+
 :host ::ng-deep .p-fluid .p-dropdown {
     width: 100%;
 }
 
-/* Garante que o p-inputnumber ocupe a largura no sistema de grid p-fluid */
+
 :host ::ng-deep .p-fluid .p-inputnumber {
     width: 100%;
 }
 
-/* Para alinhar o p-inputSwitch e seu label corretamente */
+
 .flex.align-items-center {
     display: flex;
     align-items: center;
 }
 
-/* Adicionar um pouco de margem acima do switch se estiver muito colado no campo anterior em telas pequenas */
-@media (max-width: 767px) { /* md breakpoint do PrimeFlex é 768px, então usamos um pouco menos */
+
+@media (max-width: 767px) { 
     .field.col-12.md\:col-2.flex.align-items-center {
-        margin-top: 1rem; /* Ou o valor que parecer melhor */
+        margin-top: 1rem; 
     }
 }

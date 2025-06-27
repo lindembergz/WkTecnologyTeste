@@ -9,7 +9,7 @@
 
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading || productForm.dirty">
       <div class="p-fluid grid">
-        <!-- Campo Nome -->
+
         <div class="field col-12 md:col-6">
           <label for="name">Nome do Produto</label>
           <input id="name" type="text" pInputText formControlName="name" />
@@ -24,7 +24,7 @@
           </small>
         </div>
 
-        <!-- Campo Categoria -->
+
         <div class="field col-12 md:col-6">
           <label for="categoryId">Categoria</label>
           <p-dropdown id="categoryId" [options]="categories" formControlName="categoryId" placeholder="Selecione uma Categoria"
@@ -34,7 +34,6 @@
           </small>
         </div>
 
-        <!-- Campo Marca -->
         <div class="field col-12 md:col-6">
           <label for="brand">Marca</label>
           <input id="brand" type="text" pInputText formControlName="brand" />
@@ -46,7 +45,7 @@
           </small>
         </div>
 
-        <!-- Campo Modelo -->
+
         <div class="field col-12 md:col-6">
           <label for="model">Modelo</label>
           <input id="model" type="text" pInputText formControlName="model" />
@@ -58,8 +57,7 @@
           </small>
         </div>
 
-        <!-- Campo Ano -->
-        <div class="field col-12 md:col-3">
+       <div class="field col-12 md:col-3">
             <label for="year">Ano</label>
             <p-inputNumber id="year" formControlName="year" mode="decimal" [useGrouping]="false" [min]="1900" [max]="2099" placeholder="YYYY"></p-inputNumber>
             <small *ngIf="f['year'].touched && f['year'].errors?.['required']" class="p-error">
@@ -70,7 +68,7 @@
             </small>
         </div>
 
-        <!-- Campo Cor -->
+ 
         <div class="field col-12 md:col-4">
           <label for="color">Cor</label>
           <input id="color" type="text" pInputText formControlName="color" />
@@ -82,27 +80,25 @@
           </small>
         </div>
 
-        <!-- Campo Quilometragem -->
+
         <div class="field col-12 md:col-3">
-            <label for="mileage">Quilometragem (km)</label>
+            <label for="mileage">Kilometragem (km)</label>
             <p-inputNumber id="mileage" formControlName="mileage" mode="decimal" [useGrouping]="false" [min]="0" suffix=" km"></p-inputNumber>
             <small *ngIf="f['mileage'].touched && f['mileage'].errors?.['required']" class="p-error">
-                Quilometragem é obrigatória.
+                Kilometragem é obrigatória.
             </small>
             <small *ngIf="f['mileage'].touched && f['mileage'].errors?.['min']" class="p-error">
-                Quilometragem não pode ser negativa.
+                Kilometragem não pode ser negativa.
             </small>
         </div>
 
-        <!-- Campo Ativo (IsActive) -->
-        <!-- Este campo é gerenciado no formulário, mas UpdateProductPayload e CreateProductPayload não o incluem diretamente. -->
-        <!-- A lógica no .ts lida com a ativação/desativação como uma etapa separada se necessário. -->
+
         <div class="field col-12 md:col-2 flex align-items-center mt-4">
           <p-inputSwitch id="isActive" formControlName="isActive"></p-inputSwitch>
           <label for="isActive" class="ml-2">Ativo</label>
         </div>
 
-        <!-- Campo Descrição -->
+
         <div class="field col-12">
           <label for="description">Descrição</label>
           <textarea id="description" pInputTextarea formControlName="description" rows="4" [autoResize]="true" style="width: 100%;"></textarea>

@@ -22,12 +22,6 @@ namespace WkTecnology.WebAPI.Controllers
             _logger = logger;
         }
 
-        /// <summary>
-        /// Retrieves a paginated list of products with optional filtering
-        /// </summary>
-        /// <param name="query">Search and filter parameters</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Paginated product list</returns>
         [HttpGet]
         [EnableRateLimiting("SearchPolicy")]
         [ProducesResponseType(typeof(PagedResult<ProductDto>), StatusCodes.Status200OK)]
@@ -40,12 +34,11 @@ namespace WkTecnology.WebAPI.Controllers
             {
                 if (query.PageSize > 100)
                 {
-                    return BadRequest("Page size cannot exceed 100 items");
+                    return BadRequest("O tamanho da página não pode exceder 100 itens");
                 }
 
                 var result = await _productService.GetProductsAsync(query, cancellationToken);
 
-                // Add pagination headers
                 Response.Headers.Add("X-Total-Count", result.TotalCount.ToString());
                 Response.Headers.Add("X-Page", result.Page.ToString());
                 Response.Headers.Add("X-Page-Size", result.PageSize.ToString());
@@ -55,17 +48,11 @@ namespace WkTecnology.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving products with query: {@Query}", query);
-                return StatusCode(500, "An error occurred while retrieving products");
+                _logger.LogError(ex, "Erro ao recuperar os produtos com a consulta: {@Query}", query);
+                return StatusCode(500, "Ocorreu um erro ao recuperar os produtos");
             }
         }
 
-        /// <summary>
-        /// Retrieves a specific product by ID
-        /// </summary>
-        /// <param name="id">Product ID</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Product details</returns>
         [HttpGet("{id:int}")]
         [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -79,24 +66,18 @@ namespace WkTecnology.WebAPI.Controllers
 
                 if (product == null)
                 {
-                    return NotFound($"Product with ID {id} not found");
+                    return NotFound($"Produto com ID {id} não encontrado");
                 }
 
                 return Ok(product);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving product with ID: {ProductId}", id);
-                return StatusCode(500, "An error occurred while retrieving the product");
+                _logger.LogError(ex, "Erro ao recuperar o produto com ID: {ProductId}", id);
+                return StatusCode(500, "Ocorreu um erro ao recuperar o produto");
             }
         }
 
-        /// <summary>
-        /// Creates a new product
-        /// </summary>
-        /// <param name="createProductDto">Product creation data</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Created product</returns>
         [HttpPost]
         [EnableRateLimiting("CreatePolicy")]
         [ProducesResponseType(typeof(ProductDto), StatusCodes.Status201Created)]
@@ -121,22 +102,15 @@ namespace WkTecnology.WebAPI.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Message); // já está traduzido na exceção
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating product: {@Product}", createProductDto);
-                return StatusCode(500, "An error occurred while creating the product");
+                _logger.LogError(ex, "Erro ao criar o produto: {@Product}", createProductDto);
+                return StatusCode(500, "Ocorreu um erro ao criar o produto");
             }
         }
 
-        /// <summary>
-        /// Updates an existing product
-        /// </summary>
-        /// <param name="id">Product ID</param>
-        /// <param name="updateProductDto">Product update data</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Updated product</returns>
         [HttpPut("{id:int}")]
         [EnableRateLimiting("UpdatePolicy")]
         [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
@@ -159,21 +133,15 @@ namespace WkTecnology.WebAPI.Controllers
             }
             catch (ArgumentException ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Message); // já está traduzido na exceção
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error updating product with ID: {ProductId}", id);
-                return StatusCode(500, "An error occurred while updating the product");
+                _logger.LogError(ex, "Erro ao atualizar o produto com ID: {ProductId}", id);
+                return StatusCode(500, "Ocorreu um erro ao atualizar o produto");
             }
         }
 
-        /// <summary>
-        /// Soft deletes a product (deactivates it)
-        /// </summary>
-        /// <param name="id">Product ID</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Success indicator</returns>
         [HttpDelete("{id:int}")]
         [EnableRateLimiting("DeletePolicy")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -188,24 +156,18 @@ namespace WkTecnology.WebAPI.Controllers
 
                 if (!deleted)
                 {
-                    return NotFound($"Product with ID {id} not found");
+                    return NotFound($"Produto com ID {id} não encontrado");
                 }
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deleting product with ID: {ProductId}", id);
-                return StatusCode(500, "An error occurred while deleting the product");
+                _logger.LogError(ex, "Erro ao excluir o produto com ID: {ProductId}", id);
+                return StatusCode(500, "Ocorreu um erro ao excluir o produto");
             }
         }
 
-        /// <summary>
-        /// Activates a product
-        /// </summary>
-        /// <param name="id">Product ID</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Success indicator</returns>
         [HttpPatch("{id:int}/activate")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -219,24 +181,18 @@ namespace WkTecnology.WebAPI.Controllers
 
                 if (!activated)
                 {
-                    return NotFound($"Product with ID {id} not found");
+                    return NotFound($"Produto com ID {id} não encontrado");
                 }
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error activating product with ID: {ProductId}", id);
-                return StatusCode(500, "An error occurred while activating the product");
+                _logger.LogError(ex, "Erro ao ativar o produto com ID: {ProductId}", id);
+                return StatusCode(500, "Ocorreu um erro ao ativar o produto");
             }
         }
 
-        /// <summary>
-        /// Deactivates a product
-        /// </summary>
-        /// <param name="id">Product ID</param>
-        /// <param name="cancellationToken">Cancellation token</param>
-        /// <returns>Success indicator</returns>
         [HttpPatch("{id:int}/deactivate")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -250,15 +206,15 @@ namespace WkTecnology.WebAPI.Controllers
 
                 if (!deactivated)
                 {
-                    return NotFound($"Product with ID {id} not found");
+                    return NotFound($"Produto com ID {id} não encontrado");
                 }
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error deactivating product with ID: {ProductId}", id);
-                return StatusCode(500, "An error occurred while deactivating the product");
+                _logger.LogError(ex, "Erro ao desativar o produto com ID: {ProductId}", id);
+                return StatusCode(500, "Ocorreu um erro ao desativar o produto");
             }
         }
     }

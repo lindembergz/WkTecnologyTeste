@@ -13,7 +13,7 @@ import { MessageService, SelectItem } from 'primeng/api'; // SelectItem para o d
 import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextarea } from 'primeng/inputtextarea';
 import { InputSwitchModule } from 'primeng/inputswitch'; // Para o campo isActive (se for editável no form)
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
@@ -29,7 +29,7 @@ import { InputNumberModule } from 'primeng/inputnumber'; // Para Ano e Quilometr
     ToastModule,
     CardModule,
     InputTextModule,
-    InputTextareaModule,
+    InputTextarea,
     InputSwitchModule,
     ButtonModule,
     RippleModule,
@@ -112,7 +112,7 @@ export class ProductFormComponent implements OnInit {
           color: product.color,
           mileage: product.mileage,
           categoryId: product.categoryId,
-          isActive: product.isActive // Carregar o status de ativação do produto
+          isActive: product.isActive 
         });
         this.isLoading = false;
       },
@@ -120,7 +120,7 @@ export class ProductFormComponent implements OnInit {
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao carregar dados do produto.' });
         console.error(err);
         this.isLoading = false;
-        this.router.navigate(['/products']); // Volta para a lista em caso de erro
+        this.router.navigate(['/products']); 
       }
     });
   }
@@ -146,14 +146,10 @@ export class ProductFormComponent implements OnInit {
         year: formValues.year,
         color: formValues.color,
         mileage: formValues.mileage
-        // categoryId e isActive não estão no UpdateProductPayload conforme DTO do backend.
-        // Se for necessário atualizar isActive, uma chamada separada para activate/deactivate
-        // ou ajuste no backend DTO seria necessário.
+
       };
       this.productService.updateProduct(this.productId, updatePayload).subscribe({
         next: (updatedProduct) => {
-          // Se o status de ativação foi alterado no formulário e é diferente do produto atualizado
-          // (e se o backend não o gerencia via UpdateProduct), fazer uma chamada separada.
           if (formValues.isActive !== updatedProduct.isActive) {
             const statusUpdateAction = formValues.isActive
               ? this.productService.activateProduct(updatedProduct.id)
@@ -183,7 +179,7 @@ export class ProductFormComponent implements OnInit {
           this.isLoading = false;
         }
       });
-    } else { // Modo de Criação
+    } else { 
       const createPayload: CreateProductPayload = {
         name: formValues.name,
         description: formValues.description,
@@ -193,12 +189,10 @@ export class ProductFormComponent implements OnInit {
         color: formValues.color,
         mileage: formValues.mileage,
         categoryId: formValues.categoryId
-        // isActive não está no CreateProductPayload. O backend define o padrão.
+
       };
       this.productService.createProduct(createPayload).subscribe({
         next: (createdProduct) => {
-          // Se o formulário tem um campo isActive e ele é 'false' (e o padrão do backend é 'true')
-          // então faz uma chamada para desativar após a criação.
           if (formValues.isActive === false && createdProduct.isActive === true) {
              this.productService.deactivateProduct(createdProduct.id).subscribe({
                next: () => {

@@ -38,7 +38,7 @@ export interface ProductQueryParameters {
 })
 export class ProductService {
   private baseApiUrl = environment.apiUrl;
-  private productsEndpoint = '/api/v1/products'; // Conforme ProductsController.cs
+  private productsEndpoint = '/products'; // Conforme ProductsController.cs
 
   constructor(private http: HttpClient) { }
 
@@ -48,28 +48,25 @@ export class ProductService {
 
   private handleError(error: HttpErrorResponse) {
     console.error('Ocorreu um erro na API:', error);
-    // Poderia adicionar uma lógica mais específica para diferentes códigos de erro
+
     let errorMessage = 'Algo deu errado; por favor, tente novamente mais tarde.';
     if (error.error instanceof ErrorEvent) {
-      // Erro do lado do cliente ou de rede
+
       errorMessage = `Erro: ${error.error.message}`;
     } else if (error.status === 400) {
-      // Bad Request - pode ter mensagens de validação do backend
       errorMessage = error.error?.message || error.error || 'Requisição inválida.';
       if (typeof error.error === 'object' && error.error.errors) {
-        // Para erros de validação do ASP.NET Core
-        // errorMessage = JSON.stringify(error.error.errors); // Ou formatar melhor
+        //errorMessage = JSON.stringify(error.error.errors);
       }
     } else if (error.status === 404) {
       errorMessage = 'Recurso não encontrado.';
     } else if (error.status === 422) {
         errorMessage = error.error?.message || error.error || 'Entidade não processável.';
     }
-    // Retornar um observable com uma mensagem de erro amigável
+
     return throwError(() => new Error(errorMessage));
   }
 
-  // Método para buscar produtos com paginação e filtros
   getProducts(queryParams?: ProductQueryParameters): Observable<PagedResult<Product>> {
     let params = new HttpParams();
     if (queryParams) {
@@ -105,7 +102,7 @@ export class ProductService {
       .pipe(catchError(this.handleError));
   }
 
-  // O Delete no backend é um soft delete (desativação)
+
   deleteProduct(id: number): Observable<void> {
     const url = `${this.fullProductsUrl}/${id}`;
     return this.http.delete<void>(url)
@@ -114,13 +111,13 @@ export class ProductService {
 
   activateProduct(id: number): Observable<void> {
     const url = `${this.fullProductsUrl}/${id}/activate`;
-    return this.http.patch<void>(url, null) // PATCH request sem corpo
+    return this.http.patch<void>(url, null) 
       .pipe(catchError(this.handleError));
   }
 
   deactivateProduct(id: number): Observable<void> {
     const url = `${this.fullProductsUrl}/${id}/deactivate`;
-    return this.http.patch<void>(url, null) // PATCH request sem corpo
+    return this.http.patch<void>(url, null) 
       .pipe(catchError(this.handleError));
   }
 }

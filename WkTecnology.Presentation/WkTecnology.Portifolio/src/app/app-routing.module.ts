@@ -12,11 +12,10 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'products', // Definir /products como a rota padrão
+    redirectTo: 'products', 
     pathMatch: 'full'
   },
-  // Adicionar uma rota wildcard para página não encontrada, se desejado
-  // { path: '**', component: PageNotFoundComponent }, // Exemplo: criar um PageNotFoundComponent
+
 ];
 
 @NgModule({

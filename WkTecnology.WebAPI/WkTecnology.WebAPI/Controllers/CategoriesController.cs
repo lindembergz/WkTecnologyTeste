@@ -34,8 +34,8 @@ namespace WkTecnology.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving categories");
-                return StatusCode(500, "An error occurred while retrieving categories");
+                _logger.LogError(ex, "Erro ao recuperar as categorias");
+                return StatusCode(500, "Ocorreu um erro ao recuperar as categorias");
             }
         }
 
@@ -52,15 +52,15 @@ namespace WkTecnology.WebAPI.Controllers
 
                 if (category == null)
                 {
-                    return NotFound($"Category with ID {id} not found");
+                    return NotFound($"Categoria com ID {id} não encontrada");
                 }
 
                 return Ok(category);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving category with ID: {CategoryId}", id);
-                return StatusCode(500, "An error occurred while retrieving the category");
+                _logger.LogError(ex, "Erro ao recuperar a categoria com ID: {CategoryId}", id);
+                return StatusCode(500, "Ocorreu um erro ao recuperar a categoria");
             }
         }
 
@@ -87,8 +87,8 @@ namespace WkTecnology.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating category: {@Category}", createCategoryDto);
-                return StatusCode(500, "An error occurred while creating the category");
+                _logger.LogError(ex, "Erro ao criar a categoria: {@Category}", createCategoryDto);
+                return StatusCode(500, "Ocorreu um erro ao criar a categoria");
             }
         }
 
@@ -97,7 +97,7 @@ namespace WkTecnology.WebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> UpdateCategory(int id,[FromBody] UpdateCategoryDto updateCategoryDto, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateCategory(int id, [FromBody] UpdateCategoryDto updateCategoryDto, CancellationToken cancellationToken = default)
         {
             try
             {
@@ -113,11 +113,10 @@ namespace WkTecnology.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error updating category with ID: {CategoryId}", id);
-                return StatusCode(500, "An error occurred while updating the category");
+                _logger.LogError(ex, "Erro ao atualizar a categoria com ID: {CategoryId}", id);
+                return StatusCode(500, "Ocorreu um erro ao atualizar a categoria");
             }
         }
-
 
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -130,6 +129,5 @@ namespace WkTecnology.WebAPI.Controllers
                 return NotFound();
             return NoContent();
         }
-
     }
 }

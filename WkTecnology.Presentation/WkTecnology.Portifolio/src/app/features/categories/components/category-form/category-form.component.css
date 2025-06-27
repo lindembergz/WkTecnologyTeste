@@ -1,14 +1,13 @@
-/* Estilos específicos para CategoryFormComponent */
 
 .p-card-content {
-  padding-bottom: 0; /* Remover padding extra se o footer já tem margem */
+  padding-bottom: 0; 
 }
 
 .p-dialog-footer {
   display: flex;
   justify-content: flex-end;
-  padding-top: 1rem; /* Adiciona espaço acima dos botões */
-  border-top: 1px solid var(--surface-border); /* Linha separadora opcional */
+  padding-top: 1rem; 
+  border-top: 1px solid var(--surface-border); 
 }
 
 .p-dialog-footer .p-button {
@@ -21,14 +20,14 @@
   font-weight: bold;
 }
 
-/* Ajuste para o p-inputSwitch ter um espaçamento adequado quando dentro de .field */
+
 .field .p-inputswitch {
-  margin-top: 0.5rem; /* Ou ajuste conforme necessário */
+  margin-top: 0.5rem; 
 }
 
-/* Estilo para mensagens de erro */
+
 .p-error {
-  display: block; /* Faz com que a mensagem de erro ocupe a linha inteira */
-  margin-top: 0.25rem; /* Pequeno espaço acima da mensagem de erro */
-  font-size: 0.875em; /* Tamanho de fonte menor para a mensagem de erro */
+  display: block;
+  margin-top: 0.25rem; 
+  font-size: 0.875em; 
 }
