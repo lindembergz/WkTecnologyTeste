@@ -1,0 +1,42 @@
+﻿CREATE DATABASE `vehiclesalesdb;
+
+
+CREATE TABLE `Products` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(200) NOT NULL,
+  `Description` varchar(1000) NOT NULL,
+  `Brand` varchar(100) NOT NULL,
+  `Model` varchar(100) NOT NULL,
+  `Year` int NOT NULL,
+  `Color` varchar(50) NOT NULL,
+  `Mileage` int NOT NULL,
+  `IsActive` tinyint(1) NOT NULL DEFAULT '1',
+  `CategoryId` int NOT NULL,
+  `CreatedAt` datetime(6) NOT NULL,
+  `UpdatedAt` datetime(6) DEFAULT NULL,
+  `IsDeleted` tinyint(1) NOT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `IX_Products_Brand_Model` (`Brand`,`Model`),
+  KEY `IX_Products_CategoryId` (`CategoryId`),
+  KEY `IX_Products_CreatedAt` (`CreatedAt`),
+  KEY `IX_Products_IsActive` (`IsActive`),
+  KEY `IX_Products_Name` (`Name`),
+  CONSTRAINT `FK_Products_Categories_CategoryId` FOREIGN KEY (`CategoryId`) REFERENCES `Categories` (`Id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `Categories` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `Name` varchar(100) NOT NULL,
+  `Description` varchar(500) NOT NULL,
+  `IsActive` tinyint(1) NOT NULL DEFAULT '1',
+  `ParentCategoryId` int DEFAULT NULL,
+  `CreatedAt` datetime(6) NOT NULL,
+  `UpdatedAt` datetime(6) DEFAULT NULL,
+  `IsDeleted` tinyint(1) NOT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `IX_Categories_Name` (`Name`),
+  KEY `IX_Categories_IsActive` (`IsActive`),
+  KEY `IX_Categories_ParentCategoryId` (`ParentCategoryId`),
+  CONSTRAINT `FK_Categories_Categories_ParentCategoryId` FOREIGN KEY (`ParentCategoryId`) REFERENCES `Categories` (`Id`) ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
