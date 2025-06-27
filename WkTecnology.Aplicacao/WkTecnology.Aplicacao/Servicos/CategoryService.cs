@@ -14,8 +14,6 @@ namespace Portifolio.Aplicacao.Servicos
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _categoryRepository;
-        // private readonly IValidator<CreateCategoryDto> _createValidator; // Adicionar se validação for implementada
-        // private readonly IValidator<UpdateCategoryDto> _updateValidator; // Adicionar se validação for implementada
 
         public CategoryService(ICategoryRepository categoryRepository)
         {
@@ -24,9 +22,10 @@ namespace Portifolio.Aplicacao.Servicos
 
         public async Task<PagedResult<CategoryDto>> GetCategoriesAsync(PagedQuery query, CancellationToken cancellationToken = default)
         {
-            // Nota: ICategoryRepository não tem GetPagedAsync. Se for necessário, precisaria ser adicionado.
-            // Por enquanto, vou buscar todas e paginar na memória, o que NÃO é ideal para grandes datasets.
-            // O ideal seria o repositório suportar paginação.
+            //Nota: ICategoryRepository não tem GetPagedAsync. Se for necessário, precisaria ser adicionado.
+            //No cenário de Categoria, por enquanto, vou buscar todas e paginar na memória, o que não é ideal para grandes datasets,
+            //o que é o caso.
+
             var allCategories = await _categoryRepository.GetAllAsync(cancellationToken);
 
             var pagedCategories = allCategories
@@ -39,7 +38,7 @@ namespace Portifolio.Aplicacao.Servicos
             return new PagedResult<CategoryDto>
             {
                 Items = categoryDtos,
-                TotalCount = allCategories.Count(), // Contagem total antes da paginação em memória
+                TotalCount = allCategories.Count(), 
                 Page = query.Page,
                 PageSize = query.PageSize
             };
@@ -81,18 +80,15 @@ namespace Portifolio.Aplicacao.Servicos
 
         public async Task<CategoryDto?> UpdateCategoryAsync(int id, UpdateCategoryDto updateCategoryDto, CancellationToken cancellationToken = default)
         {
-            // TODO: Adicionar validação para updateCategoryDto
-            // Ex: await _updateValidator.ValidateAndThrowAsync(updateCategoryDto, cancellationToken);
-
             var category = await _categoryRepository.GetByIdAsync(id, cancellationToken);
             if (category == null)
             {
-                return null; // Ou lançar uma exceção NotFound
+                return null; 
             }
 
             if (updateCategoryDto.ParentCategoryId.HasValue && updateCategoryDto.ParentCategoryId.Value != category.ParentCategoryId)
             {
-                if (updateCategoryDto.ParentCategoryId.Value == category.Id) // Não pode ser pai de si mesmo
+                if (updateCategoryDto.ParentCategoryId.Value == category.Id) 
                 {
                     throw new ArgumentException("Category cannot be its own parent.");
                 }
@@ -101,28 +97,17 @@ namespace Portifolio.Aplicacao.Servicos
                 {
                     throw new ArgumentException($"Parent category with ID {updateCategoryDto.ParentCategoryId.Value} not found.");
                 }
-                // TODO: Verificar dependência cíclica mais profunda se necessário.
             }
 
             category.UpdateDetails(
                 CategoryName.Create(updateCategoryDto.Name),
                 updateCategoryDto.Description ?? string.Empty
             );
-            // A entidade Category.cs atual não fornece um método público para alterar ParentCategoryId
-            // após a instanciação. O método UpdateDetails apenas altera Name e Description.
-            // Para que ParentCategoryId seja atualizável, a entidade Category precisaria ser modificada
-            // para incluir um método como `ChangeParent(int? newParentCategoryId)`.
-            // Fix for CS0122: "CategoryName.CategoryName(string)" é inacessível devido ao seu nível de proteção
-            // The constructor for `CategoryName` is inaccessible. Based on the provided context, it seems that `CategoryName` has a static factory method `Create` that should be used to instantiate it.
 
             category.UpdateDetails(
-                CategoryName.Create(updateCategoryDto.Name), // Use the static factory method `Create` to instantiate `CategoryName`
+                CategoryName.Create(updateCategoryDto.Name), 
                 updateCategoryDto.Description ?? string.Empty
             );
-            // Portanto, a alteração de ParentCategoryId em updateCategoryDto não terá efeito
-            // na persistência com a estrutura atual da entidade Category.
-            // Se updateCategoryDto.ParentCategoryId for diferente do valor existente em category.ParentCategoryId,
-            // essa mudança não será refletida.
 
             _categoryRepository.Update(category);
             await _categoryRepository.SaveChangesAsync(cancellationToken);
@@ -138,30 +123,17 @@ namespace Portifolio.Aplicacao.Servicos
                 return false;
             }
 
-            // Lógica de Soft Delete (desativar) vs Hard Delete
-            // Se for soft delete:
-            // category.Deactivate();
-            // _categoryRepository.Update(category);
-            // await _categoryRepository.SaveChangesAsync(cancellationToken);
-            // return true;
-
-            // Se for hard delete (conforme implementação atual do repositório):
-            // Verificar se há subcategorias ou produtos associados antes de deletar pode ser importante.
             if (category.SubCategories.Any())
             {
                 throw new InvalidOperationException("Cannot delete category with subcategories. Please delete or reassign subcategories first.");
             }
-            // TODO: Verificar se há produtos associados a esta categoria.
-            // var productsExist = await _productRepository.AnyProductInCategoryAsync(id, cancellationToken);
-            // if (productsExist) { throw new InvalidOperationException("Cannot delete category with associated products."); }
-
 
             _categoryRepository.Delete(category);
             await _categoryRepository.SaveChangesAsync(cancellationToken);
             return true;
         }
 
-        // --- Mapeamento ---
+
         private static CategoryDto MapToDto(Category category)
         {
             return new CategoryDto(
@@ -170,10 +142,10 @@ namespace Portifolio.Aplicacao.Servicos
                 category.Description,
                 category.IsActive,
                 category.ParentCategoryId,
-                category.ParentCategory?.Name.Value, // Acesso seguro
+                category.ParentCategory?.Name.Value, 
                 category.CreatedAt,
                 category.UpdatedAt,
-                category.SubCategories?.Select(MapToDto).ToList() ?? new List<CategoryDto>() // Mapear subcategorias recursivamente
+                category.SubCategories?.Select(MapToDto).ToList() ?? new List<CategoryDto>() 
             );
         }
     }

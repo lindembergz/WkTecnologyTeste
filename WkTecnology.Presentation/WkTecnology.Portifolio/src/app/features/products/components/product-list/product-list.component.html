@@ -1,0 +1,95 @@
+<p-toast></p-toast>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+<div class="card">
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <h2>Veículos</h2>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <button pButton pRipple label="Novo Produto" icon="pi pi-plus" class="p-button-success" (click)="navigateToCreateProduct()"></button>
+    </ng-template>
+  </p-toolbar>
+
+  <p-table
+    #dt
+    [value]="products"
+    [lazy]="true"
+    (onLazyLoad)="loadProducts($event)"
+    [paginator]="true"
+    [rows]="queryParams.pageSize || 10"
+    [totalRecords]="totalRecords"
+    [loading]="isLoading"
+    dataKey="id"
+    
+    styleClass="p-datatable-customers"
+    [rowHover]="true"
+    [rowsPerPageOptions]="[10, 25, 50, 100]"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} produtos"
+    [globalFilterFields]="['name', 'brand', 'model', 'categoryName', 'year', 'color']">
+
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-between align-items-center">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input pInputText type="text" (input)="filterTable($event)" placeholder="Pesquisar produtos..." class="p-inputtext-sm" />
+        </span>
+        <button pButton pRipple type="button" icon="pi pi-filter-slash" label="Limpar Filtro" class="p-button-outlined p-button-sm" (click)="clearFilter()"></button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="name">Nome <p-sortIcon field="name"></p-sortIcon></th>
+        <th pSortableColumn="categoryName">Categoria <p-sortIcon field="categoryName"></p-sortIcon></th>
+        <th pSortableColumn="brand">Marca <p-sortIcon field="brand"></p-sortIcon></th>
+        <th pSortableColumn="model">Modelo <p-sortIcon field="model"></p-sortIcon></th>
+        <th pSortableColumn="year" style="width:8rem; text-align: center;">Ano <p-sortIcon field="year"></p-sortIcon></th>
+        <th pSortableColumn="mileage" style="width:10rem; text-align: right;">Kilometragem <p-sortIcon field="mileage"></p-sortIcon></th>
+        <th pSortableColumn="isActive" style="width:8rem; text-align: center;">Status <p-sortIcon field="isActive"></p-sortIcon></th>
+        <th style="width:10rem; text-align: center;">Ações</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-product>
+      <tr>
+        <td>{{product.name}}</td>
+        <td>{{product.categoryName}}</td>
+        <td>{{product.brand}}</td>
+        <td>{{product.model}}</td>
+        <td style="text-align: center;">{{product.year}}</td>
+        <td style="text-align: right;">{{product.mileage | number}} km</td>
+        <td style="text-align: center;">
+          <p-tag
+            [value]="product.isActive ? 'Ativo' : 'Inativo'"
+            [severity]="product.isActive ? 'success' : 'danger'"
+            (click)="toggleProductStatus(product)"
+            [style.cursor]="'pointer'"
+            pTooltip="{{product.isActive ? 'Clique para desativar' : 'Clique para ativar'}}"
+            tooltipPosition="top">
+          </p-tag>
+        </td>
+        <td style="text-align: center;">
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-info mr-2" (click)="navigateToEditProduct(product.id)" pTooltip="Editar Produto"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="confirmDeleteProduct(product.id)" pTooltip="Excluir/Desativar Produto" [disabled]="!product.isActive"></button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="8" class="text-center">Nenhum produto encontrado.</td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="loadingbody">
+        <tr>
+          <td colspan="8" class="text-center">
+            <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+            <p>Carregando produtos...</p>
+          </td>
+        </tr>
+      </ng-template>
+  </p-table>
+</div>

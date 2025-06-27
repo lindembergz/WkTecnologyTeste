@@ -8,6 +8,6 @@ export interface CreateCategoryPayload {
 export interface UpdateCategoryPayload {
   name: string;
   description?: string | null;
-  isActive: boolean; // Assumindo que o backend aceitará isso, conforme nosso formulário
+  isActive: boolean;
   parentCategoryId?: number | null;
 }

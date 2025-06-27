@@ -1,0 +1,8 @@
+:host ::ng-deep .p-tag {
+  cursor: pointer;
+}
+
+.p-inputtext-sm {
+    font-size: 0.875rem;
+    padding: 0.4375rem 0.65625rem; 
+}

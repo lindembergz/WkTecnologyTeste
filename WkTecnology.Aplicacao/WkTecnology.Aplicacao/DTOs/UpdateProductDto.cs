@@ -13,6 +13,8 @@ namespace Portifolio.Aplicacao.DTOs
         string Model,
         int Year,
         string Color,
-        int Mileage
+        int Mileage,
+        int CategoryId 
+        //bool IsActive
     );
 }

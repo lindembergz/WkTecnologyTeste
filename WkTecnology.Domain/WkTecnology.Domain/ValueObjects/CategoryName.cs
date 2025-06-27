@@ -11,7 +11,7 @@ namespace Portifolio.Dominio.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                throw new ArgumentException("Category name cannot be null or empty.", nameof(value));
+                throw new ArgumentException("Nome da categoria não pode ser vazia.", nameof(value));
             }
 
             Value = value;

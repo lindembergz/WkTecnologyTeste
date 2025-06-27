@@ -16,11 +16,9 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Apply configurations
         modelBuilder.ApplyConfiguration(new ProductConfiguration());
         modelBuilder.ApplyConfiguration(new CategoryConfiguration());
 
-        // Global query filters
         modelBuilder.Entity<Product>().HasQueryFilter(p => p.IsActive);
         modelBuilder.Entity<Category>().HasQueryFilter(c => c.IsActive);
     }

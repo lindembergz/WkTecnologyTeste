@@ -35,7 +35,6 @@ namespace Portifolio.Infraestrutura.Data.Configuration
                     .HasMaxLength(100)
                     .IsRequired();
 
-                // Adicione o índice aqui:
                 name.HasIndex(n => n.Value)
                     .IsUnique()
                     .HasDatabaseName("IX_Categories_Name");
@@ -52,7 +51,6 @@ namespace Portifolio.Infraestrutura.Data.Configuration
 
             builder.Property(c => c.UpdatedAt);
 
-            // Self-referencing relationship
             builder.HasOne(c => c.ParentCategory)
                 .WithMany(c => c.SubCategories)
                 .HasForeignKey(c => c.ParentCategoryId)

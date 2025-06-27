@@ -4,10 +4,8 @@ import { Category } from '../../../../core/models/category.model';
 import { CategoryService } from '../../../../core/services/category.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
-// Angular Common Module
 import { CommonModule } from '@angular/common';
 
-// PrimeNG Modules - Experimental direct import
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -15,15 +13,15 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
-import { RippleModule } from 'primeng/ripple'; // For pRipple
-import { TooltipModule } from 'primeng/tooltip'; // For pTooltip
+import { RippleModule } from 'primeng/ripple'; 
+import { TooltipModule } from 'primeng/tooltip'; 
 
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.css'],
   providers: [ConfirmationService, MessageService],
-  imports: [ // Experimental for non-standalone component
+  imports: [ 
     CommonModule,
     ToastModule,
     ConfirmDialogModule,
@@ -39,7 +37,7 @@ import { TooltipModule } from 'primeng/tooltip'; // For pTooltip
 export class CategoryListComponent implements OnInit {
   categories: Category[] = [];
   isLoading = false;
-  // TODO: Adicionar propriedade para o termo de pesquisa e colunas da tabela
+
 
   constructor(
     private categoryService: CategoryService,
@@ -69,11 +67,11 @@ export class CategoryListComponent implements OnInit {
   }
 
   navigateToCreateCategory(): void {
-    this.router.navigate(['/categories/new']); // TODO: Ajustar a rota conforme necessário
+    this.router.navigate(['/categories/new']); 
   }
 
   navigateToEditCategory(categoryId: number): void {
-    this.router.navigate(['/categories/edit', categoryId]); // TODO: Ajustar a rota conforme necessário
+    this.router.navigate(['/categories/edit', categoryId]); 
   }
 
   deleteCategory(categoryId: number): void {
@@ -88,7 +86,7 @@ export class CategoryListComponent implements OnInit {
         this.categoryService.deleteCategory(categoryId).subscribe({
           next: () => {
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Categoria excluída.' });
-            this.loadCategories(); // Recarrega a lista
+            this.loadCategories(); 
             this.isLoading = false;
           },
           error: (err) => {
@@ -100,8 +98,6 @@ export class CategoryListComponent implements OnInit {
       }
     });
   }
-
-  // TODO: Implementar lógica de pesquisa/filtro
 
   filterTable(event: Event, dt: any) {
   const input = event.target as HTMLInputElement;

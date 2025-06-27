@@ -1,8 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Portifolio.Dominio.Repositories;
 using Portifolio.Infraestrutura.Data;
-using Portifolio.Core;    // Para PagedResult
-                          // Para ProductQuery
+using Portifolio.Core;   
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;

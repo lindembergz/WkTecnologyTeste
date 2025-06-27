@@ -44,11 +44,9 @@
         }
         public virtual void Validate()
         {
-            // This method can be overridden in derived classes to implement specific validation logic.
-            // For example, you might want to check if the Id is greater than zero.
             if (Id <= 0)
             {
-                throw new InvalidOperationException("Id must be greater than zero.");
+                throw new InvalidOperationException("Id deve ser maior que zero.");
             }
         }
 
@@ -56,7 +54,7 @@
         {
             if (id <= 0)
             {
-                throw new ArgumentException("Id must be greater than zero.", nameof(id));
+                throw new ArgumentException("Id deve ser maior que zero.", nameof(id));
             }
             Id = id;
         }
@@ -64,7 +62,7 @@
         {
             if (createdAt == default)
             {
-                throw new ArgumentException("CreatedAt cannot be default value.", nameof(createdAt));
+                throw new ArgumentException("CreatedAt não pode ser o default.", nameof(createdAt));
             }
             CreatedAt = createdAt;
         }
@@ -73,7 +71,7 @@
         {
             if (updatedAt.HasValue && updatedAt.Value < CreatedAt)
             {
-                throw new ArgumentException("UpdatedAt cannot be earlier than CreatedAt.", nameof(updatedAt));
+                throw new ArgumentException("UpdatedAt não pode ser anterior a CreatedAt.", nameof(updatedAt));
             }
             UpdatedAt = updatedAt;
 
@@ -104,7 +102,7 @@
         {
             if (entity == null)
             {
-                throw new ArgumentNullException(nameof(entity), "Entity cannot be null.");
+                throw new ArgumentNullException(nameof(entity), "Entidade não pode ser vazia.");
             }
             SetBaseEntity(entity.Id, entity.CreatedAt, entity.UpdatedAt, entity.IsActive, entity.IsDeleted);
         }

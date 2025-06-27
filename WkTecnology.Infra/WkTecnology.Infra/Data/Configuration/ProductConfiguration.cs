@@ -15,7 +15,6 @@ namespace Portifolio.Infraestrutura.Data.Configuration
             builder.Property(p => p.Id)
                 .ValueGeneratedOnAdd();
 
-            // Value Objects
             builder.OwnsOne(p => p.Name, name =>
             {
                 name.Property(n => n.Value)
@@ -23,7 +22,6 @@ namespace Portifolio.Infraestrutura.Data.Configuration
                     .HasMaxLength(200)
                     .IsRequired();
 
-                // Adicione o índice aqui:
                 name.HasIndex(n => n.Value)
                     .HasDatabaseName("IX_Products_Name");
             });
@@ -57,13 +55,10 @@ namespace Portifolio.Infraestrutura.Data.Configuration
 
             builder.Property(p => p.UpdatedAt);
 
-            // Relationships
             builder.HasOne(p => p.Category)
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            // Indexes
 
             builder.HasIndex(p => new { p.Brand, p.Model })
                 .HasDatabaseName("IX_Products_Brand_Model");

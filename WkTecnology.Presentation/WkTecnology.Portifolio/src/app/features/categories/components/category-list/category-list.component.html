@@ -11,8 +11,6 @@
     </ng-template>
   </p-toolbar>
 
-  <!-- TODO: Adicionar input de pesquisa/filtro aqui -->
-
   <p-table
     #dt
     [value]="categories"
@@ -24,13 +22,12 @@
     [rows]="10"
     [showCurrentPageReport]="true"
     [rowsPerPageOptions]="[10, 25, 50]"
-    [paginator]="categories.length > 10"
+    [paginator]="true"
     currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} categorias"
     [globalFilterFields]="['name', 'description']">
 
     <ng-template pTemplate="caption">
       <div class="flex justify-content-end">
-        <!-- Exemplo de input de filtro global para a tabela, pode ser melhorado -->
         <span class="p-input-icon-left ml-auto">
           <i class="pi pi-search"></i>         
           <input  pInputText  type="text"  (input)="filterTable($event, dt)"  placeholder="Pesquisar..."/>

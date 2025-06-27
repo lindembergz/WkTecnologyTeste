@@ -16,7 +16,7 @@ namespace Portifolio.Domain.Query
         public ProductQuery() { }
 
         public ProductQuery(int page = 1, int pageSize = 10, string? search = null, string? sortBy = null, bool sortDescending = false)
-            : base(page, pageSize, search, sortBy, sortDescending) // Adjusted to match the constructor of PagedQuery  
+            : base(page, pageSize, search, sortBy, sortDescending) 
         {
             CategoryId = null;
             Name = null;

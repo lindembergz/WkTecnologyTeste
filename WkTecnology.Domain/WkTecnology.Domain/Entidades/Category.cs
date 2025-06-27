@@ -22,7 +22,7 @@ namespace Portifolio.Dominio.Entidades
         private readonly List<Product> _products = new();
         public IReadOnlyList<Product> Products => _products.AsReadOnly();
 
-        private Category() { } // EF Core
+        private Category() { } 
 
         public Category(CategoryName name, string description, int? parentCategoryId = null)
         {

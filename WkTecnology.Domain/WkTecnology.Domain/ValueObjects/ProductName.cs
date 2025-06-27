@@ -7,8 +7,6 @@ using Portifolio.Core;
 
 namespace Portifolio.Dominio.ValueObjects
 {
-    // Assuming the ValueObject base class is missing, we need to define it.
-    // If it exists elsewhere in your project, ensure the correct namespace is imported.
     public class ProductName : ValueObject
     {
         public string Value { get; }
@@ -16,10 +14,10 @@ namespace Portifolio.Dominio.ValueObjects
         public ProductName(string value)
         {
             if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Product name cannot be empty");
+                throw new ArgumentException("Nome do produto não pode ser vazio");
 
             if (value.Length > 200)
-                throw new ArgumentException("Product name cannot exceed 200 characters");
+                throw new ArgumentException("Nome do produto não pode exceder 200 caracteres");
 
             Value = value.Trim();
         }

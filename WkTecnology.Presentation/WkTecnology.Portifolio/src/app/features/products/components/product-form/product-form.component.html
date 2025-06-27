@@ -1,0 +1,101 @@
+<p-toast></p-toast>
+
+<div class="card">
+  <p-card [header]="pageTitle">
+    <div *ngIf="isLoading && !productForm.dirty" class="text-center my-3">
+      <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+      <p>Carregando...</p>
+    </div>
+
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading || productForm.dirty">
+      <div class="p-fluid grid">
+
+        <fieldset class="col-12 mb-3">
+          <legend>Informações Básicas</legend>
+
+          <div class="field col-12 md:col-6">
+            <label for="name">Nome do Produto</label>
+            <input id="name" type="text" pInputText formControlName="name" />
+            <small *ngIf="f['name'].touched && f['name'].errors?.['required']" class="p-error">Nome é obrigatório.</small>
+            <small *ngIf="f['name'].touched && f['name'].errors?.['minlength']" class="p-error">Nome deve ter no mínimo {{ f['name'].errors?.['minlength']?.requiredLength }} caracteres.</small>
+            <small *ngIf="f['name'].touched && f['name'].errors?.['maxlength']" class="p-error">Nome deve ter no máximo {{ f['name'].errors?.['maxlength']?.requiredLength }} caracteres.</small>
+          </div>
+
+          <div class="field col-12 md:col-6">
+            <label for="categoryId">Categoria</label>
+            <p-dropdown id="categoryId" [options]="categories" formControlName="categoryId"
+              placeholder="Selecione uma Categoria" [showClear]="true"
+              optionLabel="label" optionValue="value"></p-dropdown>
+            <small *ngIf="f['categoryId'].touched && f['categoryId'].errors?.['required']" class="p-error">Categoria é obrigatória.</small>
+          </div>
+        </fieldset>
+
+        <fieldset class="col-12 mb-3">
+          <legend>Detalhes Técnicos</legend>
+
+          <div class="field col-12 md:col-6">
+            <label for="brand">Marca</label>
+            <input id="brand" type="text" pInputText formControlName="brand" />
+            <small *ngIf="f['brand'].touched && f['brand'].errors?.['required']" class="p-error">Marca é obrigatória.</small>
+            <small *ngIf="f['brand'].touched && f['brand'].errors?.['maxlength']" class="p-error">Marca deve ter no máximo {{ f['brand'].errors?.['maxlength']?.requiredLength }} caracteres.</small>
+          </div>
+
+          <div class="field col-12 md:col-6">
+            <label for="model">Modelo</label>
+            <input id="model" type="text" pInputText formControlName="model" />
+            <small *ngIf="f['model'].touched && f['model'].errors?.['required']" class="p-error">Modelo é obrigatório.</small>
+            <small *ngIf="f['model'].touched && f['model'].errors?.['maxlength']" class="p-error">Modelo deve ter no máximo {{ f['model'].errors?.['maxlength']?.requiredLength }} caracteres.</small>
+          </div>
+
+          <div class="field col-12 md:col-3">
+            <label for="year">Ano</label>
+            <p-inputNumber id="year" formControlName="year" mode="decimal" [useGrouping]="false"
+              [min]="1900" [max]="2099" placeholder="YYYY"></p-inputNumber>
+            <small *ngIf="f['year'].touched && f['year'].errors?.['required']" class="p-error">Ano é obrigatório.</small>
+            <small *ngIf="f['year'].touched && (f['year'].errors?.['min'] || f['year'].errors?.['max'])" class="p-error">Ano inválido.</small>
+          </div>
+
+          <div class="field col-12 md:col-4">
+            <label for="color">Cor</label>
+            <input id="color" type="text" pInputText formControlName="color" />
+            <small *ngIf="f['color'].touched && f['color'].errors?.['required']" class="p-error">Cor é obrigatória.</small>
+            <small *ngIf="f['color'].touched && f['color'].errors?.['maxlength']" class="p-error">Cor deve ter no máximo {{ f['color'].errors?.['maxlength']?.requiredLength }} caracteres.</small>
+          </div>
+
+          <div class="field col-12 md:col-3">
+            <label for="mileage">Kilometragem (km)</label>
+            <p-inputNumber id="mileage" formControlName="mileage" mode="decimal" [useGrouping]="false" [min]="0" suffix=" km"></p-inputNumber>
+            <small *ngIf="f['mileage'].touched && f['mileage'].errors?.['required']" class="p-error">Kilometragem é obrigatória.</small>
+            <small *ngIf="f['mileage'].touched && f['mileage'].errors?.['min']" class="p-error">Kilometragem não pode ser negativa.</small>
+          </div>
+        </fieldset>
+
+<fieldset class="col-12 mb-3">
+  <legend>Outros</legend>
+  <div class="p-fluid grid">
+    <div class="field col-12 md:col-2 flex align-items-center">
+      <p-inputSwitch id="isActive" formControlName="isActive"></p-inputSwitch>
+      <label for="isActive" class="ml-2">Ativo</label>
+    </div>
+
+    <div class="field col-12 md:col-10">
+      <label for="description">Descrição</label>
+      <textarea id="description" pInputTextarea formControlName="description" rows="4" [autoResize]="true" style="width: 100%;"></textarea>
+      <small *ngIf="f['description'].touched && f['description'].errors?.['maxlength']" class="p-error">
+        Descrição deve ter no máximo {{ f['description'].errors?.['maxlength']?.requiredLength }} caracteres.
+      </small>
+    </div>
+  </div>
+</fieldset>
+
+      </div>
+
+      <div class="p-dialog-footer mt-4 flex justify-content-end">
+        <button pButton pRipple type="button" label="Cancelar" icon="pi pi-times" class="p-button-text mr-2" (click)="onCancel()"></button>
+        <button pButton pRipple type="submit" label="Salvar Produto" icon="pi pi-check"
+                class="p-button-success"
+                [loading]="isLoading" [disabled]="productForm.invalid || isLoading"></button>
+      </div>
+    </form>
+  </p-card>
+</div>

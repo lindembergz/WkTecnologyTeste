@@ -7,7 +7,6 @@ using Portifolio.Infraestrutura.Repositories;
 using Portifolio.Aplicacao.Validators;
 using Portifolio.Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Microsoft.OpenApi.Models;
 using ICiProvaCandidato.Dominio.UoW;
 
@@ -24,11 +23,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
             mysqlOptions.CommandTimeout(30);
         }));
 
-builder.Services.AddStackExchangeRedisCache(options =>
+/*builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
     options.InstanceName = "VehicleSales";
-});
+});*/
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

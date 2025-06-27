@@ -13,7 +13,7 @@ namespace Portifolio.Dominio.Entidades
         public string Model { get; private set; }  // Modelo
         public int Year { get; private set; } // Ano
         public string Color { get; private set; }   // Cor
-        public int Mileage { get; private set; } // Quilometragem
+        public int Mileage { get; private set; } // Kilometragem
         public bool IsActive { get; private set; } // Indica se o produto está ativo
         public int CategoryId { get; private set; } // ID da categoria do produto
         public Category Category { get; private set; } // Categoria do produto  
