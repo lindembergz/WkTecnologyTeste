@@ -2,13 +2,39 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from '../../../../core/models/category.model';
 import { CategoryService } from '../../../../core/services/category.service';
-import { ConfirmationService, MessageService } from 'primeng/api'; // Para diálogos de confirmação e mensagens
+import { ConfirmationService, MessageService } from 'primeng/api';
+
+// Angular Common Module
+import { CommonModule } from '@angular/common';
+
+// PrimeNG Modules - Experimental direct import
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { RippleModule } from 'primeng/ripple'; // For pRipple
+import { TooltipModule } from 'primeng/tooltip'; // For pTooltip
 
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
   styleUrls: ['./category-list.component.css'],
-  providers: [ConfirmationService, MessageService] // Adicionar seletor de confirmação e mensagens
+  providers: [ConfirmationService, MessageService],
+  imports: [ // Experimental for non-standalone component
+    CommonModule,
+    ToastModule,
+    ConfirmDialogModule,
+    ToolbarModule,
+    TableModule,
+    TagModule,
+    InputTextModule,
+    ButtonModule,
+    RippleModule,
+    TooltipModule
+  ]
 })
 export class CategoryListComponent implements OnInit {
   categories: Category[] = [];
