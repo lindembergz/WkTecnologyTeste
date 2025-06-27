@@ -33,7 +33,7 @@
         <!-- Exemplo de input de filtro global para a tabela, pode ser melhorado -->
         <span class="p-input-icon-left ml-auto">
           <i class="pi pi-search"></i>
-          <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Pesquisar..." />
+          <input pInputText type="text" (input)="dt.filterGlobal(($event.target as HTMLInputElement).value, 'contains')" placeholder="Pesquisar..." />
         </span>
       </div>
     </ng-template>

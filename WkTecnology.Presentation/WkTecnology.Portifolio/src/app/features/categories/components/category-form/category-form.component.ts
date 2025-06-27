@@ -1,16 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../../../core/services/category.service';
 import { Category } from '../../../../core/models/category.model';
-import { UpdateCategoryPayload } from '../../../../core/models/category-payloads.model'; // Importar UpdateCategoryPayload
+import { UpdateCategoryPayload } from '../../../../core/models/category-payloads.model';
 import { MessageService } from 'primeng/api';
+
+// PrimeNG Modules - Experimental direct import for non-standalone component
+import { ToastModule } from 'primeng/toast';
+import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { ButtonModule } from 'primeng/button';
+// RippleModule might be needed for pRipple on button, usually comes with ButtonModule or imported separately
+import { RippleModule } from 'primeng/ripple';
+
 
 @Component({
   selector: 'app-category-form',
   templateUrl: './category-form.component.html',
   styleUrls: ['./category-form.component.css'],
-  providers: [MessageService] // Adicionar MessageService se não estiver globalmente
+  providers: [MessageService],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ToastModule,
+    CardModule,
+    InputTextModule,
+    InputTextareaModule,
+    InputSwitchModule,
+    ButtonModule,
+    RippleModule // Added for pRipple
+  ] // This is for standalone components. Angular might error here.
 })
 export class CategoryFormComponent implements OnInit {
   categoryForm!: FormGroup;
@@ -102,7 +125,11 @@ export class CategoryFormComponent implements OnInit {
         }
       });
     } else {
-      this.categoryService.createCategory(categoryPayload).subscribe({
+      // Use formData, which is this.categoryForm.value
+      // Ensure the structure of formData matches what createCategory expects.
+      // If CreateCategoryPayload is defined and different, map formData to it.
+      // Assuming createCategory can take an object like { name, description, isActive }
+      this.categoryService.createCategory(formData).subscribe({
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Categoria criada!' });
           this.isLoading = false;
