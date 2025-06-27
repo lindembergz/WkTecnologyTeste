@@ -12,7 +12,7 @@ import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea'; // Adicionar InputTextareaModule
+import { InputTextarea } from 'primeng/inputtextarea'; // Adicionar InputTextareaModule
 import { InputSwitchModule } from 'primeng/inputswitch';   // Adicionar InputSwitchModule
 import { CardModule } from 'primeng/card';                 // Adicionar CardModule
 import { DialogModule } from 'primeng/dialog';
@@ -24,8 +24,7 @@ import { TooltipModule } from 'primeng/tooltip';
 
 @NgModule({
   declarations: [
-    CategoryListComponent,
-    CategoryFormComponent // Adicionar CategoryFormComponent às declarações
+// Adicionar CategoryFormComponent às declarações
   ],
   imports: [
     CommonModule,
@@ -38,15 +37,18 @@ import { TooltipModule } from 'primeng/tooltip';
     ToolbarModule,
     ButtonModule,
     InputTextModule,
-    InputTextareaModule, // Adicionar
+    InputTextarea, // Adicionar
     InputSwitchModule,   // Adicionar
     CardModule,          // Adicionar
     DialogModule,
     ConfirmDialogModule,
     RippleModule,
     TagModule,
-    TooltipModule
+    TooltipModule,
     // DropdownModule // Adicionar se usar p-dropdown
+
+        CategoryListComponent,
+    CategoryFormComponent 
   ],
   providers: [
     // MessageService e ConfirmationService são providos nos próprios componentes ou podem ser providos aqui se forem usados por mais componentes no módulo.

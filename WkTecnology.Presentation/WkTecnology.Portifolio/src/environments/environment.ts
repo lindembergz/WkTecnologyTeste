@@ -3,7 +3,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:7049/api' // URL da API para desenvolvimento (ajuste a porta se necessário)
+  apiUrl: 'http://localhost:5284/api/v1' // URL da API para desenvolvimento (ajuste a porta se necessário)
 };
 
 /*

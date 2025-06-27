@@ -55,8 +55,9 @@ export class CategoryListComponent implements OnInit {
   loadCategories(): void {
     this.isLoading = true;
     this.categoryService.getCategories().subscribe({
-      next: (data) => {
-        this.categories = data;
+      next: (data: any) => {
+        console.log(data)
+        this.categories = data.items;
         this.isLoading = false;
       },
       error: (err) => {
@@ -101,4 +102,9 @@ export class CategoryListComponent implements OnInit {
   }
 
   // TODO: Implementar lógica de pesquisa/filtro
+
+  filterTable(event: Event, dt: any) {
+  const input = event.target as HTMLInputElement;
+  dt.filterGlobal(input.value, 'contains');
+}
 }

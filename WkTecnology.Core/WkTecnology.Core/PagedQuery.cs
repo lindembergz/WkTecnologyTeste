@@ -20,6 +20,8 @@ namespace Portifolio.Core
         public int Count => (Page - 1) * PageSize + 1;
         public List<string> Query { get; set; } = new List<string>();
         public List<string> Sort { get; set; } = new List<string>();
+
+        public PagedQuery() { }
         public PagedQuery(int page = 1, int pageSize = 10, string? search = null, string? sortBy = null, bool sortDescending = false)
         {
             Page = page;
@@ -38,3 +40,8 @@ namespace Portifolio.Core
         }
     }
 }
+
+
+
+
+

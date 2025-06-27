@@ -91,5 +91,45 @@ namespace WkTecnology.WebAPI.Controllers
                 return StatusCode(500, "An error occurred while creating the category");
             }
         }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(typeof(CategoryDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateCategory(int id,[FromBody] UpdateCategoryDto updateCategoryDto, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var updated = await _categoryService.UpdateCategoryAsync(id, updateCategoryDto, cancellationToken);
+                if (updated == null)
+                    return NotFound();
+
+                return Ok(updated);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error updating category with ID: {CategoryId}", id);
+                return StatusCode(500, "An error occurred while updating the category");
+            }
+        }
+
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _categoryService.DeleteCategoryAsync(id);
+            if (!result)
+                return NotFound();
+            return NoContent();
+        }
+
     }
 }

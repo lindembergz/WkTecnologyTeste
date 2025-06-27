@@ -11,7 +11,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputTextarea } from 'primeng/inputtextarea';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ButtonModule } from 'primeng/button';
 // RippleModule might be needed for pRipple on button, usually comes with ButtonModule or imported separately
@@ -29,11 +29,13 @@ import { RippleModule } from 'primeng/ripple';
     ToastModule,
     CardModule,
     InputTextModule,
-    InputTextareaModule,
+    InputTextarea,
     InputSwitchModule,
     ButtonModule,
-    RippleModule // Added for pRipple
+    RippleModule,
+    ToastModule, // Added for pRipple
   ] // This is for standalone components. Angular might error here.
+
 })
 export class CategoryFormComponent implements OnInit {
   categoryForm!: FormGroup;
