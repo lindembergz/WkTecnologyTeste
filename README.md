@@ -15,6 +15,9 @@ O projeto é preparado para ser **resiliente** , **alta escalabilidade**, **vali
 - **Infraestrutura**: Implementação dos repositórios, contexto do Entity Framework Core e integrações externas.
 - **Core**: Objetos de valor, utilitários e contratos comuns.
 
+- ![image](https://github.com/user-attachments/assets/3330cee1-e451-4b9d-9ce2-15065361d1d0)
+
+
 ### Principais Tecnologias
 
 - .NET 8  
