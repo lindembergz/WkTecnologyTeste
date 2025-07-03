@@ -1,4 +1,9 @@
+
+
+
 # WkTecnology.Portifolio
+
+<div class="badge-base LI-profile-badge" data-locale="pt_BR" data-size="medium" data-theme="light" data-type="VERTICAL" data-vanity="lindemberg-cortez-a6ba42195" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://br.linkedin.com/in/lindemberg-cortez-a6ba42195?trk=profile-badge">Lindemberg Cortez</a></div>
 
 ## Descrição
 
@@ -14,6 +19,9 @@ O projeto é preparado para ser **resiliente** , **alta escalabilidade**, **vali
 - **Domínio**: Entidades, interfaces de repositórios e lógica de domínio.
 - **Infraestrutura**: Implementação dos repositórios, contexto do Entity Framework Core e integrações externas.
 - **Core**: Objetos de valor, utilitários e contratos comuns.
+
+- ![image](https://github.com/user-attachments/assets/3330cee1-e451-4b9d-9ce2-15065361d1d0)
+
 
 ### Principais Tecnologias
 
@@ -133,6 +141,8 @@ Abra no navegador:
 https://localhost:5284
 
 
+linkedIn : https://www.linkedin.com/in/lindemberg-cortez-a6ba42195/
+Email: lindemberg.cortez@gmail.com
 
 
-
+              
