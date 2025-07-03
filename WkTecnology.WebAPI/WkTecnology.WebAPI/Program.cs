@@ -9,6 +9,7 @@ using Portifolio.Infraestrutura.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ICiProvaCandidato.Dominio.UoW;
+using Microsoft.AspNetCore.Antiforgery;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -108,6 +109,16 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddAntiforgery(options =>
+{
+    options.HeaderName = "X-XSRF-TOKEN";
+    options.Cookie.Name = "XSRF-TOKEN"; 
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    options.Cookie.Domain = "localhost";
+});
+
+
 builder.Services.AddControllers();
 
 builder.Services.AddLogging(logging =>
@@ -129,11 +140,40 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+
+
 app.UseHttpsRedirection();
-app.UseCors("AllowAngularApp");
-app.UseRateLimiter();
+
 app.UseRouting();
+
+app.UseCors("AllowAngularApp");
+
+app.Use(async (context, next) =>
+{
+    if (HttpMethods.IsPost(context.Request.Method) ||
+        HttpMethods.IsPut(context.Request.Method) ||
+        HttpMethods.IsDelete(context.Request.Method))
+    {
+        var antiforgery = context.RequestServices.GetRequiredService<IAntiforgery>();
+        await antiforgery.ValidateRequestAsync(context);
+    }
+    await next();
+});
+
+app.MapGet("/api/v1/antiforgery/token", (HttpContext context, IAntiforgery antiforgery) =>
+{
+    var tokens = antiforgery.GetAndStoreTokens(context);
+    return Results.Ok(new { token = tokens.RequestToken });
+})
+.RequireCors("AllowAngularApp") 
+.AllowAnonymous();
+
+
+app.UseRateLimiter();
+
 app.MapControllers();
+
+
 
 using (var scope = app.Services.CreateScope())
 {

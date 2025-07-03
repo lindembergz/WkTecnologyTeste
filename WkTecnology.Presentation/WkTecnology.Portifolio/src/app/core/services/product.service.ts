@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Product } from '../models/product.model';
 import { CreateProductPayload, UpdateProductPayload } from '../models/product-payloads.model';
 import { environment } from '../../../environments/environment';
+import { ApiService } from './api.service';
 
 // Interface para representar a resposta paginada da API (similar ao PagedResult<T> do backend)
 export interface PagedResult<T> {
@@ -36,16 +37,29 @@ export interface ProductQueryParameters {
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class ProductService implements OnInit{
   private baseApiUrl = environment.apiUrl;
   private productsEndpoint = '/products'; // Conforme ProductsController.cs
 
-  constructor(private http: HttpClient) { }
+  private _xsrfToken: string | null = null;
+
+  constructor( private api: ApiService
+  ) {
+    
+   }
+
+    ngOnInit(): void {
+
+            // No serviço Angular, chame este método ao iniciar a aplicação ou antes de requisições protegidas
+     
+
+
+    }
 
   private get fullProductsUrl(): string {
     return `${this.baseApiUrl}${this.productsEndpoint}`;
   }
-
+/*
   private handleError(error: HttpErrorResponse) {
     console.error('Ocorreu um erro na API:', error);
 
@@ -65,7 +79,7 @@ export class ProductService {
     }
 
     return throwError(() => new Error(errorMessage));
-  }
+  }*/
 
   getProducts(queryParams?: ProductQueryParameters): Observable<PagedResult<Product>> {
     let params = new HttpParams();
@@ -81,43 +95,35 @@ export class ProductService {
       });
     }
 
-    return this.http.get<PagedResult<Product>>(this.fullProductsUrl, { params })
-      .pipe(catchError(this.handleError));
+    return this.api.get<PagedResult<Product>>(this.fullProductsUrl);
   }
 
   getProductById(id: number): Observable<Product> {
     const url = `${this.fullProductsUrl}/${id}`;
-    return this.http.get<Product>(url)
-      .pipe(catchError(this.handleError));
+    return this.api.get<Product>(url);
   }
 
   createProduct(productData: CreateProductPayload): Observable<Product> {
-    return this.http.post<Product>(this.fullProductsUrl, productData)
-      .pipe(catchError(this.handleError));
+    return this.api.post<Product>(this.fullProductsUrl, productData)
+      
   }
 
   updateProduct(id: number, payload: UpdateProductPayload): Observable<Product> {
-    const url = `${this.fullProductsUrl}/${id}`;
-    return this.http.put<Product>(url, payload)
-      .pipe(catchError(this.handleError));
+     return this.api.put<Product>(`${this.fullProductsUrl}/${id}`, payload );
   }
-
 
   deleteProduct(id: number): Observable<void> {
     const url = `${this.fullProductsUrl}/${id}`;
-    return this.http.delete<void>(url)
-      .pipe(catchError(this.handleError));
+    return this.api.delete<void>(url);
   }
 
   activateProduct(id: number): Observable<void> {
     const url = `${this.fullProductsUrl}/${id}/activate`;
-    return this.http.patch<void>(url, null) 
-      .pipe(catchError(this.handleError));
+    return this.api.patch<void>(url, null);
   }
 
   deactivateProduct(id: number): Observable<void> {
     const url = `${this.fullProductsUrl}/${id}/deactivate`;
-    return this.http.patch<void>(url, null) 
-      .pipe(catchError(this.handleError));
+    return this.api.patch<void>(url, null);
   }
 }

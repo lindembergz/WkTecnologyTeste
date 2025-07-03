@@ -1,7 +1,7 @@
 import { importProvidersFrom, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +25,11 @@ import { RippleModule } from 'primeng/ripple';
 
     ToolbarModule,
     ButtonModule,
-    RippleModule
+    RippleModule,
+             HttpClientXsrfModule.withOptions({
+           cookieName: 'XSRF-TOKEN',
+           headerName: 'X-XSRF-TOKEN'
+         })
   ],
   providers: [    
       providePrimeNG({
