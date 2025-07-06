@@ -3,7 +3,7 @@ using System;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 
-namespace WkTecnology.WebAPI.StartUp
+namespace WkTecnology.WebAPI.Extension
 {
     public static class RateLimiterExtensions
     {
@@ -15,18 +15,18 @@ namespace WkTecnology.WebAPI.StartUp
 
                 options.AddFixedWindowLimiter("DefaultPolicy", opt =>
                 {
-                    opt.PermitLimit = 5;
+                    opt.PermitLimit = 100;
                     opt.Window = TimeSpan.FromMinutes(1);
-                    //opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                    //opt.QueueLimit = 50;
+                    opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                    opt.QueueLimit = 50;
                 });
 
                 options.AddFixedWindowLimiter("SearchPolicy", opt =>
                                 {
-                                    opt.PermitLimit = 1;
+                                    opt.PermitLimit = 10;
                                     opt.Window = TimeSpan.FromMinutes(1);
-                                    opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                opt.QueueLimit = 0;
+                                    //opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                                    //opt.QueueLimit = 0;
                                 });
 
 

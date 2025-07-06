@@ -2,11 +2,11 @@
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Http;
 
-namespace WkTecnology.WebAPI.StartUp
+namespace WkTecnology.WebAPI.Extension
 {
     public static class AntiforgeryExtensions
     {
-        public static IServiceCollection AddCustomAntiforgery(this IServiceCollection services, IWebHostEnvironment environment)
+        public static IServiceCollection AddCustomAntiforgery(this IServiceCollection services)
         {
             services.AddAntiforgery(options =>
             {
@@ -15,11 +15,8 @@ namespace WkTecnology.WebAPI.StartUp
                 options.Cookie.SameSite = SameSiteMode.None;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.Domain = "localhost"; // Ajuste conforme o domínio da API
-
-                if (environment.IsEnvironment("Test"))
-                {
-                    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
-                }
+                options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+                
             });
             return services;
         }

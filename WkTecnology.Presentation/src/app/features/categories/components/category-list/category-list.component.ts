@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from '../../../../core/models/category.model';
 import { CategoryService } from '../../../../core/services/category.service';
@@ -15,6 +15,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple'; 
 import { TooltipModule } from 'primeng/tooltip'; 
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-category-list',
@@ -34,9 +35,10 @@ import { TooltipModule } from 'primeng/tooltip';
     TooltipModule
   ]
 })
-export class CategoryListComponent implements OnInit {
+export class CategoryListComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
   isLoading = false;
+  private destroy$ = new Subject<void>();
 
 
   constructor(
@@ -50,9 +52,16 @@ export class CategoryListComponent implements OnInit {
     this.loadCategories();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   loadCategories(): void {
     this.isLoading = true;
-    this.categoryService.getCategories().subscribe({
+    this.categoryService.getCategories()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
       next: (data: any) => {
         console.log(data)
         this.categories = data.items;
@@ -83,7 +92,9 @@ export class CategoryListComponent implements OnInit {
       rejectLabel: 'Não',
       accept: () => {
         this.isLoading = true;
-        this.categoryService.deleteCategory(categoryId).subscribe({
+        this.categoryService.deleteCategory(categoryId)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
           next: () => {
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Categoria excluída.' });
             this.loadCategories(); 

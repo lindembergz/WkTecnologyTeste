@@ -1,7 +1,7 @@
 
 using Portifolio.Infraestrutura.Data;
 using WkTecnology.WebAPI.Extensions;
-using WkTecnology.WebAPI.StartUp;
+using WkTecnology.WebAPI.Extension;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +16,7 @@ builder.Services.AddCustomCors();
 
 if (!builder.Environment.IsEnvironment("Test"))
 {
-    builder.Services.AddCustomAntiforgery(builder.Environment);
+    builder.Services.AddCustomAntiforgery();
 }
 
 builder.Services.AddEndpointsApiExplorer();

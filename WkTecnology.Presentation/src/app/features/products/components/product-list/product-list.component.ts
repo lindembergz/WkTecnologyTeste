@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from '../../../../core/models/product.model';
 import { ProductService, ProductQueryParameters, PagedResult } from '../../../../core/services/product.service';
@@ -19,6 +19,7 @@ import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 import { TooltipModule } from 'primeng/tooltip';
 import { PaginatorModule } from 'primeng/paginator';
+import { Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -41,12 +42,13 @@ import { PaginatorModule } from 'primeng/paginator';
   styleUrls: ['./product-list.component.css'],
   providers: [ConfirmationService, MessageService] 
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
   @ViewChild('dt') dt!: Table;
 
   products: Product[] = [];
   totalRecords: number = 0;
   isLoading = false;
+  private destroy$ = new Subject<void>();
 
 
   queryParams: ProductQueryParameters = {
@@ -67,6 +69,11 @@ export class ProductListComponent implements OnInit {
     this.loadProducts();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   loadProducts(event?: any): void {
     this.isLoading = true;
     if (event) { 
@@ -74,7 +81,9 @@ export class ProductListComponent implements OnInit {
       this.queryParams.pageSize = event.rows;
     }
 
-    this.productService.getProducts(this.queryParams).subscribe({
+    this.productService.getProducts(this.queryParams)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
       next: (pagedResult: PagedResult<Product>) => {
         this.products = pagedResult.items;
         this.totalRecords = pagedResult.totalCount;
@@ -130,7 +139,9 @@ export class ProductListComponent implements OnInit {
   private deleteProduct(productId: number): void {
     this.isLoading = true;
 
-    this.productService.deleteProduct(productId).subscribe({
+    this.productService.deleteProduct(productId)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Produto desativado.' });
         this.loadProducts(); 
@@ -155,7 +166,9 @@ export class ProductListComponent implements OnInit {
       rejectLabel: 'Não',
       accept: () => {
         this.isLoading = true;
-        action.subscribe({
+        action
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
           next: () => {
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: `Produto ${actionMessage} com sucesso!` });
 
