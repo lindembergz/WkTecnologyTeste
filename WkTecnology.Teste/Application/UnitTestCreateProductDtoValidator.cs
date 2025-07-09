@@ -3,7 +3,7 @@ using FluentValidation.TestHelper;
 using Portifolio.Aplicacao.DTOs;
 using Portifolio.Aplicacao.Validators;
 
-namespace WkTecnology.Teste.Application
+namespace Portifolio.Teste.Application
 {
     public class UnitTestCreateProductDtoValidator
     {

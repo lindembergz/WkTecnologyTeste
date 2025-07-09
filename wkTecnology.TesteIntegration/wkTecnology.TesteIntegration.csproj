@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WkTecnology.WebAPI\WkTecnology.WebAPI.csproj" />
+    <ProjectReference Include="..\Servicos\Portifolio\Portifolio.WebAPI\WkTecnology.WebAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Xunit;
 using Portifolio.Infraestrutura.Data;
-using WkTecnology.WebAPI;
+using Portifolio.WebAPI;
 
-namespace WkTecnology.Tests
+namespace Portifolio.Tests
 {
     public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
@@ -24,14 +24,14 @@ namespace WkTecnology.Tests
             builder.ConfigureServices(services =>
             {
                 var descriptor = services.SingleOrDefault(
-                    d => d.ServiceType == typeof(DbContextOptions<ApplicationDbContext>)
+                    d => d.ServiceType == typeof(DbContextOptions<PortifolioDbContext>)
                 );
                 if (descriptor != null)
                 {
                     services.Remove(descriptor);
                 }
 
-                services.AddDbContext<ApplicationDbContext>(options =>
+                services.AddDbContext<PortifolioDbContext>(options =>
                 {
                 options.UseInMemoryDatabase("TestDatabase");
                 });

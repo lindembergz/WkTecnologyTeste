@@ -1,4 +1,4 @@
-﻿namespace Portifolio.Core
+﻿namespace WkTecnology.Core
 {
     public abstract class BaseEntity
     {

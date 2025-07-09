@@ -2,7 +2,7 @@
 using Portifolio.Dominio.Entidades;
 using Portifolio.Dominio.ValueObjects;
 
-namespace WkTecnology.Teste.Domain
+namespace Portifolio.Teste.Domain
 {
     public class UnitTestCategory
     {

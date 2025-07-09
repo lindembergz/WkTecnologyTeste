@@ -1,6 +1,0 @@
-@WkTecnology.WebAPI_HostAddress = http://localhost:5284
-
-GET {{WkTecnology.WebAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
