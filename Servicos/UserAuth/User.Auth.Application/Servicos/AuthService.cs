@@ -67,10 +67,10 @@ namespace UserAuth.Aplicacao.Servicos
                 return null; // Credenciais inválidas
             }
 
-            if (!user.IsEmailConfirmed)
-            {
-                return new TokenDto { TwoFactorRequired = false }; // Indica que e-mail precisa ser confirmado
-            }
+            //if (!user.IsEmailConfirmed)
+            //{
+            //    return new TokenDto { TwoFactorRequired = false }; // Indica que e-mail precisa ser confirmado
+            //}
 
             // if (user.IsTwoFactorEnabled)
             // {

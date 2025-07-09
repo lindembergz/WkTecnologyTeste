@@ -9,7 +9,8 @@ namespace Portifolio.WebAPI.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
+
     [IgnoreAntiforgeryToken]
     public class UserController : ControllerBase
     {

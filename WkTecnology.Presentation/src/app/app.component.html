@@ -4,9 +4,15 @@
     </div>
 
     <div class="p-toolbar-group-right">
-        <button pButton pRipple label="Produtos" icon="pi pi-car" class="p-button-text" routerLink="/products" routerLinkActive="active-link"></button>
-        <button pButton pRipple label="Categorias" icon="pi pi-tags" class="p-button-text" routerLink="/categories" routerLinkActive="active-link"></button>
-       
+        <ng-container *ngIf="isLoggedIn$ | async; else loggedOut">
+            <button pButton pRipple label="Produtos" icon="pi pi-car" class="p-button-text" routerLink="/products" routerLinkActive="active-link"></button>
+            <button pButton pRipple label="Categorias" icon="pi pi-tags" class="p-button-text" routerLink="/categories" routerLinkActive="active-link"></button>
+            <button pButton pRipple label="Logout" icon="pi pi-sign-out" class="p-button-text" (click)="logout()"></button>
+        </ng-container>
+        <ng-template #loggedOut>
+            <button pButton pRipple label="Login" icon="pi pi-sign-in" class="p-button-text" routerLink="/login"></button>
+            <button pButton pRipple label="Register" icon="pi pi-user-plus" class="p-button-text" routerLink="/register"></button>
+        </ng-template>
     </div>
 </p-toolbar>
 

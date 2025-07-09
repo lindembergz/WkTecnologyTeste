@@ -6,7 +6,7 @@ using UserAuth.Aplicacao.Servicos;
 namespace Portifolio.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [IgnoreAntiforgeryToken]
     public class AuthController : ControllerBase
     {

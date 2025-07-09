@@ -15,7 +15,6 @@ namespace Portifolio.WebAPI.Extensions
                 options.Cookie.SameSite = SameSiteMode.None;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 options.Cookie.Domain = "localhost"; // Ajuste conforme o domínio da API
-                options.Cookie.SecurePolicy = CookieSecurePolicy.None;
                 
             });
             return services;
