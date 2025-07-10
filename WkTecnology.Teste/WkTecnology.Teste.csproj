@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Servicos\Portifolio\Portifolio.Aplicacao\Portifolio.Aplicacao.csproj" />
     <ProjectReference Include="..\Servicos\Portifolio\Portifolio.Domain\Portifolio.Dominio.csproj" />
+    <ProjectReference Include="..\WkTecnology.WebAPI\WkTecnology.WebAPI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

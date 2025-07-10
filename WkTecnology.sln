@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Portifolio.Aplicacao", "Ser
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{EE667042-CC72-42D3-A235-A02809F2E6DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WkTecnology.WebAPI", "Servicos\Portifolio\Portifolio.WebAPI\WkTecnology.WebAPI.csproj", "{7A26BEE4-E1FA-4D7D-8F45-4A6053478C11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WkTecnology.WebAPI", "WkTecnology.WebAPI\WkTecnology.WebAPI.csproj", "{7A26BEE4-E1FA-4D7D-8F45-4A6053478C11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WkTecnology.Core", "WkTecnology.Core\WkTecnology.Core.csproj", "{0BF6FD38-CD13-47AA-97EA-7A82A450ABE3}"
 EndProject
