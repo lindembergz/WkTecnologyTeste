@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Portifolio.WebAPI.Extensions
+namespace WkTecnology.WebAPI.Extensions
 {
     public static class AuthServiceExtensions
     {

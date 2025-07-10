@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Http;
 
-namespace Portifolio.WebAPI.Extensions
+namespace WkTecnology.WebAPI.Extensions
 {
     public static class AntiforgeryExtensions
     {

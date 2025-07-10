@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Xunit;
 using Portifolio.Infraestrutura.Data;
-using Portifolio.WebAPI;
+using WkTecnology.WebAPI;
 
 namespace Portifolio.Tests
 {

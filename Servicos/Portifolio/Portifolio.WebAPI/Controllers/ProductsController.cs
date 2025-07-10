@@ -6,7 +6,7 @@ using Portifolio.Aplicacao.Servicos;
 using System.ComponentModel.DataAnnotations;
 using Portifolio.Domain.Query;
 
-namespace Portifolio.WebAPI.Controllers
+namespace WkTecnology.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]

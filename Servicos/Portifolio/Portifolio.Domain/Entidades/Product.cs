@@ -9,14 +9,14 @@ namespace Portifolio.Dominio.Entidades
     {
         public ProductName Name { get; private set; } // Nome
         public string Description { get; private set; } // Descrição
-        public string Brand { get; private set; } // Marca
+        public string? Brand { get; private set; } // Marca
         public string Model { get; private set; }  // Modelo
         public int Year { get; private set; } // Ano
-        public string Color { get; private set; }   // Cor
+        public string? Color { get; private set; }   // Cor
         public int Mileage { get; private set; } // Kilometragem
-        public bool IsActive { get; private set; } // Indica se o produto está ativo
+        public new bool IsActive { get; private set; } // Indica se o produto está ativo
         public int CategoryId { get; private set; } // ID da categoria do produto
-        public Category Category { get; private set; } // Categoria do produto  
+        public Category? Category { get; } // Categoria do produto  
 
         private Product() { } 
 

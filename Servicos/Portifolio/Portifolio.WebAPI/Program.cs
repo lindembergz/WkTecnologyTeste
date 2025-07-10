@@ -1,6 +1,6 @@
 
 using Portifolio.Infraestrutura.Data;
-using Portifolio.WebAPI.Extensions;
+using WkTecnology.WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +56,8 @@ if (app.Environment.IsDevelopment())
         c.RoutePrefix = string.Empty;
     });
 }
+
+
 
 app.UseHttpsRedirection();
 app.UseRouting();

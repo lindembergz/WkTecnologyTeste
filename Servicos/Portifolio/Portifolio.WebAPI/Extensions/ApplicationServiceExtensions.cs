@@ -5,7 +5,7 @@ using Portifolio.Aplicacao.Validators;
 using FluentValidation;
 using UserAuth.Aplicacao.Servicos;
 
-namespace Portifolio.WebAPI.Extensions
+namespace WkTecnology.WebAPI.Extensions
 {
     public static class ApplicationServiceExtensions
     {

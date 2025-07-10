@@ -3,7 +3,7 @@ using UserAuth.Aplicacao.DTOs;
 using UserAuth.Aplicacao.Servicos;
 
 
-namespace Portifolio.WebAPI.Controllers
+namespace WkTecnology.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]

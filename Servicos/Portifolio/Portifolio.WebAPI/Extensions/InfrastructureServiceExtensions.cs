@@ -16,7 +16,7 @@ using UserAuth.Aplicacao.Servicos;
 using Portifolio.Dominio.UoW;
 using UserAuth.Dominio.UoW;
 
-namespace Portifolio.WebAPI.Extensions
+namespace WkTecnology.WebAPI.Extensions
 {
     public static class InfrastructureServiceExtensions
     {

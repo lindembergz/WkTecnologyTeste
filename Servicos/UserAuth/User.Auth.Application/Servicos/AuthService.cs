@@ -33,6 +33,11 @@ namespace UserAuth.Aplicacao.Servicos
 
         public async Task<bool> RegisterAsync(RegisterDto registerDto)
         {
+            if (string.IsNullOrEmpty(registerDto.Username) || string.IsNullOrEmpty(registerDto.Email) || string.IsNullOrEmpty(registerDto.Password))
+            {
+                return false; // Dados de registro inválidos
+            }
+
             var existingUser = await _userRepository.GetByUsernameAsync(registerDto.Username);
             if (existingUser != null)
             {
@@ -79,11 +84,20 @@ namespace UserAuth.Aplicacao.Servicos
             //     _userRepository.Update(user);
             //     await _unitOfWork.CommitAsync();
             //     await _emailService.SendTwoFactorCodeAsync(user.Email, user.TwoFactorCode);
-
+            //
             //     return new TokenDto { TwoFactorRequired = true };
             // }
 
-            return await GenerateTokens(user);
+            try
+            {
+                return await GenerateTokens(user);
+            }
+            catch (InvalidOperationException ex)
+            {
+                // Log the exception, e.g., using ILogger
+                // _logger.LogError(ex, "JWT settings are not configured or invalid.");
+                return null; // Or rethrow a more specific exception
+            }
         }
 
         public async Task<bool> ConfirmEmailAsync(string email, string token)

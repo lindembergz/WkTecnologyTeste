@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using UserAuth.Aplicacao.DTOs;
 using UserAuth.Aplicacao.Servicos;
 
-namespace Portifolio.WebAPI.Controllers
+namespace WkTecnology.WebAPI.Controllers
 {
     [Authorize]
     [ApiController]

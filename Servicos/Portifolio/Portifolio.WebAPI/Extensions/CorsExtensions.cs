@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Portifolio.WebAPI.Extensions
+namespace WkTecnology.WebAPI.Extensions
 {
     public static class CorsExtensions
     {

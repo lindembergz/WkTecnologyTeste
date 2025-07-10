@@ -5,7 +5,7 @@ using WkTecnology.Core;
 using Portifolio.Aplicacao.DTOs;
 using Portifolio.Aplicacao.Servicos;
 
-namespace Portifolio.WebAPI.Controllers
+namespace WkTecnology.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]

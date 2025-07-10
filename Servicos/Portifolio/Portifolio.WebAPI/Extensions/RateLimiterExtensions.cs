@@ -3,7 +3,7 @@ using System;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Threading.RateLimiting;
 
-namespace Portifolio.WebAPI.Extensions
+namespace WkTecnology.WebAPI.Extensions
 {
     public static class RateLimiterExtensions
     {

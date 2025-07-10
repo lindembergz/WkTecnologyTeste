@@ -12,9 +12,9 @@ namespace Portifolio.Dominio.Entidades
     {
         public CategoryName Name { get; private set; }
         public string Description { get; private set; }
-        public bool IsActive { get; private set; }
+        public new bool IsActive { get; private set; }
         public int? ParentCategoryId { get; private set; }
-        public Category? ParentCategory { get; private set; }
+        public Category? ParentCategory { get; }
 
         private readonly List<Category> _subCategories = new();
         public IReadOnlyList<Category> SubCategories => _subCategories.AsReadOnly();
