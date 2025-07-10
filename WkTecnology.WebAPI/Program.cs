@@ -10,7 +10,10 @@ builder.Services.AddApplicationServices();
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
 //Registra configura��es customizadas:
-builder.Services.AddCustomRateLimiter();
+if (!builder.Environment.IsEnvironment("Test"))
+{
+    builder.Services.AddCustomRateLimiter();
+}
 builder.Services.AddCustomCors();
 
 

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.RateLimiting;
 using Xunit;
 using Portifolio.Infraestrutura.Data;
 using WkTecnology.WebAPI;
@@ -39,9 +40,15 @@ namespace Portifolio.Tests
 
             builder.ConfigureServices(services =>
             {
-                services.PostConfigure<Microsoft.AspNetCore.RateLimiting.RateLimiterOptions>(options =>
+                services.AddRateLimiter(options =>
                 {
                     options.RejectionStatusCode = 429;
+
+                    options.AddFixedWindowLimiter("SearchPolicy", opt =>
+                    {
+                        opt.PermitLimit = 2; // Limite baixo para o teste
+                        opt.Window = TimeSpan.FromMinutes(1);
+                    });
                 });
             });
         }
@@ -67,8 +74,6 @@ namespace Portifolio.Tests
         public async Task RateLimiter_Should_Throttle_Excessive_Requests()
         {
             // Arrange
-            int permitLimit = 2;
-            int queueLimit = 50;
             int totalRequests = 6; // 6 requests to trigger throttling (no queuing in Test environment)
 
             // Act

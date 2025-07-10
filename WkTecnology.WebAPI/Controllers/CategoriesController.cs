@@ -22,6 +22,7 @@ namespace WkTecnology.WebAPI.Controllers
         }
 
         [HttpGet]
+        [EnableRateLimiting("SearchPolicy")]
         [ProducesResponseType(typeof(PagedResult<CategoryDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(PagedResult<CategoryDto>), StatusCodes.Status429TooManyRequests)]
         public async Task<ActionResult<PagedResult<CategoryDto>>> GetCategories(
